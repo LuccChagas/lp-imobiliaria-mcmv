@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Identidade "Autoridade Clara"
+   Azul profundo estrutura a pagina, fundo claro domina,
+   dourado alianca aparece so em fios, selos e bordas.
+   ------------------------------------------------------------------ */
+@theme {
+  /* Azul de confianca — cor da marca */
+  --color-azul-50: #eff6fd;
+  --color-azul-100: #dcebf9;
+  --color-azul-200: #bcd8f3;
+  --color-azul-300: #8bbcea;
+  --color-azul-400: #5199dd;
+  --color-azul-500: #1570ef;
+  --color-azul-600: #175cd3;
+  --color-azul-700: #12437f;
+  --color-azul-800: #0e3565;
+  --color-azul-900: #0a2647;
+  --color-azul-950: #061931;
+
+  /* Dourado alianca — detalhe, nunca massa.
+     ouro-700 e o unico seguro para texto sobre fundo claro (AA). */
+  --color-ouro-50: #fbf6e7;
+  --color-ouro-200: #efdfa8;
+  --color-ouro-300: #e2c874;
+  --color-ouro-400: #d4b14a;
+  --color-ouro-500: #c9a227;
+  --color-ouro-600: #a8842c;
+  --color-ouro-700: #7d6119;
+
+  /* Verde de aprovacao */
+  --color-verde-50: #e6f6f0;
+  --color-verde-500: #17a37a;
+  --color-verde-600: #12805c;
+  --color-verde-700: #0d6146;
+
+  /* Neutros quentes */
+  --color-fundo: #fbfaf8;
+  --color-superficie: #ffffff;
+  --color-tinta-900: #101828;
+  --color-tinta-700: #344054;
+  --color-tinta-600: #475467;
+  --color-tinta-500: #667085;
+  --color-tinta-400: #98a2b3;
+  --color-tinta-300: #d0d5dd;
+  --color-tinta-200: #e4e7ec;
+  --color-tinta-100: #f2f4f7;
+
+  --font-titulo: var(--fonte-titulo), ui-sans-serif, system-ui, sans-serif;
+  --font-texto: var(--fonte-texto), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Header fixo esconde ancora — ver CLAUDE.md secao 8 */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-fundo);
+  color: var(--color-tinta-900);
+  font-family: var(--font-texto);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+}
+
+/* Numeros tabulares onde o valor importa (parcelas, metricas) */
+.numerico {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ------------------------------------------------------------------
+   Reveal — CSS puro, acionado por IntersectionObserver
+   ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--atraso, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal[data-visivel="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ------------------------------------------------------------------
+   Carrossel continuo das provas sociais
+   A faixa e duplicada; deslocar 50% fecha o ciclo sem emenda.
+   ------------------------------------------------------------------ */
+@keyframes rolar {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.faixa-rolante {
+  animation: rolar var(--duracao, 70s) linear infinite;
+  will-change: transform;
+}
+
+.faixa-rolante:hover,
+.faixa-rolante:focus-within {
+  animation-play-state: paused;
+}
+
+/* Acessibilidade + screenshot deterministico */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .faixa-rolante {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Foco visivel e consistente em toda a pagina */
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--color-azul-500);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
