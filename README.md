@@ -12,6 +12,27 @@ Zero dependência além do que o `create-next-app` traz.
 
 ---
 
+## Só existem dois canais de contato
+
+Por decisão do cliente, a página tem **apenas WhatsApp e formulário**. Não há link de
+Instagram, de site nem de e-mail em lugar nenhum da interface — nem no rodapé.
+
+O Instagram e o `apartamentofacilitado.net` continuam em `contato` no `site.ts`, mas são
+usados **só no JSON-LD** (`sameAs`), que é invisível ao visitante e serve para o Google ligar
+as entidades. Não geram nenhum caminho de clique. Se quiser tirar de lá também, é só remover
+do `sameAs` em `src/app/page.tsx`.
+
+Sobram dois links externos na página, ambos em Localização: o **Google Maps** do
+empreendimento e o do stand. Não são canal de contato, são utilidade para achar o endereço —
+mas se o cliente quiser zero saída, avise que eu troco por endereço em texto puro.
+
+### Trocar o número do WhatsApp
+
+Um lugar só: `contato.whatsapp` em [`src/lib/site.ts`](./src/lib/site.ts). Só dígitos, com o
+55 na frente. Todos os 12 CTAs e as mensagens pré-preenchidas saem dali.
+
+---
+
 ## ⚠️ Falta uma coisa para poder subir
 
 **O CRECI da Tayná.** É o único bloqueio que restou.
@@ -114,11 +135,12 @@ Copie `.env.example` para `.env.local`. Todas opcionais — a página funciona c
 6. **Localização** — endereços do empreendimento e do stand, com link para o Maps, e o que tem em volta
 7. **Condições** — entrada, FGTS, subsídio, autônomo, restrição no nome, e as três faixas HIS reais
 8. **Como funciona** — 4 passos
-9. **Sobre a Tayná** — a foto dela com o contrato da Caixa em destaque (prova mais forte que retrato posado), com o retrato institucional encaixado, métricas e credenciais
-10. **Prova social** — 3 vídeos com play sob demanda e um carrossel contínuo com 11 fotos de clientes reais
-11. **FAQ** — 8 objeções
-12. **Formulário** — nome, WhatsApp, dormitórios, renda, FGTS
-13. **Rodapé** — CRECI, selos e os avisos legais
+9. **Sobre a Tayná** — a foto dela com o contrato da Caixa em destaque (prova mais forte que retrato posado), com a foto dela a caminho de um atendimento encaixada, métricas e credenciais
+10. **Depoimentos** — os prints de conversa que ela publica no Instagram, em seção própria e fundo escuro. É a prova mais forte da página: cliente falando com as próprias palavras
+11. **Prova social** — 3 vídeos com play sob demanda e um carrossel contínuo com 12 fotos de clientes reais
+12. **FAQ** — 8 objeções
+13. **Formulário** — nome, WhatsApp, dormitórios, renda, FGTS
+14. **Rodapé** — CRECI, selos e os avisos legais
 
 ### `src/lib/site.ts` é a única coisa que você precisa editar
 
@@ -137,13 +159,23 @@ só são buscados quando alguém toca no play.
 | --- | --- | --- |
 | `public/empreendimento/` | 18 renders | cury.net |
 | `public/plantas/` | 6 plantas | cury.net |
-| `public/tayna/` | foto institucional, foto do contrato, retrato | site dela |
-| `public/provas/` | 11 fotos + 3 vídeos com poster | site dela |
+| `public/tayna/` | retrato, foto a caminho do atendimento, foto do contrato | enviadas pelo cliente |
+| `public/depoimentos/` | 3 prints de conversa | Instagram dela |
+| `public/provas/` | 12 fotos + 3 vídeos com poster | site dela + cliente |
 | `public/logos/` | Caixa, MCMV, FGTS | site dela |
 
-O retrato em `public/tayna/retrato.jpg` é uma capa de reel com o selo do Reels removido por
-inpainting. A origem tinha 241×323 — se aparecer o arquivo original (reel sai em 1080×1920),
-vale trocar.
+### Três modos de exibição de imagem
+
+O componente `Galeria` faz os três, e a escolha muda muito a altura da página:
+
+- **`grade`** — grid estático. Usado onde a abundância é o argumento (os 12 espaços de lazer).
+- **`carrossel`** — faixa que rola sozinha e pausa no hover. Só vale com muitos itens; com
+  poucos, a duplicação do ciclo fica visível e parece defeito.
+- **`faixa`** — rolagem horizontal com snap no celular, grid no desktop. Para poucos itens.
+
+Trocar as galerias de `empreendimento` e `plantas` de grid para carrossel **encurtou a página
+em 2.226px no celular** (−11,4%), o que abriu espaço para a seção de depoimentos entrar sem
+deixar a página mais longa do que era.
 
 ---
 

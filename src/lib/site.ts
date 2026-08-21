@@ -43,13 +43,24 @@ export type Foto = {
 /* Contato                                                                     */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * ATENCAO — a pagina tem apenas DOIS canais de contato, por decisao do cliente:
+ * o WhatsApp e o formulario. Nao ha link de Instagram, de site nem de e-mail
+ * em lugar nenhum da interface. Se for adicionar algum, confirme antes.
+ */
 export const contato = {
-  /** Numero real, extraido do site dela. So digitos, com DDI. */
+  /**
+   * TROQUE AQUI quando o cliente passar o numero definitivo.
+   * So digitos, com DDI 55. E o unico lugar do projeto onde o numero aparece:
+   * todos os CTAs e a mensagem pre-preenchida saem daqui.
+   */
   whatsapp: "5511991969596",
   /** TODO: CRECI da Tayna. Obrigatorio por lei (6.530/78) e ainda nao temos. */
   creci: "CRECI-SP 000.000-F",
   /** CRECI da Central de Vendas da Cury, publicado na pagina do empreendimento. */
   creciCentralCury: "CRECI 23.670-J",
+  /** Usados so no JSON-LD (sameAs), para o Google ligar as entidades.
+   *  NAO viram link visivel na pagina. */
   instagram: "tayna_apartamentofacilitado",
   siteDela: "https://www.apartamentofacilitado.net",
 } as const;
@@ -346,11 +357,11 @@ export const sobre = {
     "Atendimento em toda a Grande São Paulo",
   ],
   cta: "Falar direto comigo",
-  fotoInstitucional: {
-    src: "/tayna/institucional.jpg",
-    largura: 1500,
-    altura: 1042,
-    alt: "Tayná Paschoal, Gerente de Vendas na Cury Construtora",
+  fotoCaminhando: {
+    src: "/tayna/caminhando.jpg",
+    largura: 1000,
+    altura: 1500,
+    alt: "Tayná Paschoal a caminho de um atendimento, ao telefone",
   } satisfies Foto,
   fotoContrato: {
     src: "/tayna/contrato.jpg",
@@ -360,9 +371,9 @@ export const sobre = {
   } satisfies Foto,
   fotoRetrato: {
     src: "/tayna/retrato.jpg",
-    largura: 602,
-    altura: 807,
-    alt: "Tayná Paschoal",
+    largura: 1000,
+    altura: 1500,
+    alt: "Tayná Paschoal, Gerente de Vendas na Cury Construtora",
   } satisfies Foto,
 } as const;
 
@@ -375,12 +386,20 @@ export const provas = {
   titulo: "Famílias que já assinaram comigo",
   descricao:
     "Fotos e vídeos reais de quem fechou o apartamento comigo, nos stands da Cury em São Paulo.",
-  fotos: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n) => ({
-    src: `/provas/prova-${String(n).padStart(2, "0")}.jpg`,
-    alt: `Cliente que comprou o apartamento com a gerente Tayná`,
-    largura: 500,
-    altura: 500,
-  })),
+  fotos: [
+    ...[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n) => ({
+      src: `/provas/prova-${String(n).padStart(2, "0")}.jpg`,
+      alt: "Cliente que comprou o apartamento com a gerente Tayná",
+      largura: 500,
+      altura: 500,
+    })),
+    {
+      src: "/provas/prova-12.jpg",
+      alt: "Família recebendo a pasta do apartamento no stand da Cury, ao lado da gerente Tayná",
+      largura: 600,
+      altura: 800,
+    },
+  ],
   videos: [1, 2, 3].map((n) => ({
     src: `/provas/videos/depoimento-${n}.mp4`,
     poster: `/provas/videos/depoimento-${n}.jpg`,
@@ -388,6 +407,45 @@ export const provas = {
     altura: 848,
     titulo: `Entrega de chaves — vídeo ${n}`,
   })),
+} as const;
+
+/* -------------------------------------------------------------------------- */
+/* 10b. Depoimentos em print                                                   */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Prints de conversa que ela publica no Instagram. E a prova mais forte da
+ * pagina: nao e foto posada, e cliente falando com as proprias palavras.
+ * O alt descreve o conteudo porque a imagem E texto — leitor de tela precisa.
+ */
+export const depoimentos = {
+  sobretitulo: "Nas palavras deles",
+  titulo: "O que chega no WhatsApp depois da chave na mão",
+  descricao:
+    "Mensagens reais de quem comprou comigo. Toque para ler por inteiro.",
+  itens: [
+    {
+      src: "/depoimentos/print-1.jpg",
+      largura: 1080,
+      altura: 1308,
+      alt: "Print de conversa: cliente conta que pegou as chaves e agradece — “pra mim não foi só uma venda, você realmente me ajudou e incentivou”.",
+      legenda: "“Não foi só uma venda”",
+    },
+    {
+      src: "/depoimentos/print-2.jpg",
+      largura: 1080,
+      altura: 1090,
+      alt: "Print de conversa: cliente avisa que foi fazer a vistoria e receber a chave do apartamento no Cidade Jaguaré Vila Pinheiros, e agradece pelo atendimento no dia da venda.",
+      legenda: "Entrega de chaves · Cidade Jaguaré",
+    },
+    {
+      src: "/depoimentos/print-3.jpg",
+      largura: 1080,
+      altura: 1007,
+      alt: "Depoimento de cliente com cinco estrelas: conta que a obra foi entregue no prazo, que recebeu informações durante toda a construção e recomenda o atendimento.",
+      legenda: "Cinco estrelas · obra entregue no prazo",
+    },
+  ],
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -532,6 +590,7 @@ export const mensagens = {
   condicoes: `Oi Tayná! Queria fazer a simulação para saber se eu consigo ser aprovado.`,
   sobre: `Oi Tayná! Vim pelo site e gostaria de falar com você sobre o ${NOME_CURTO}.`,
   provas: `Oi Tayná! Vi os depoimentos no seu site e quero fazer minha simulação também.`,
+  depoimentos: `Oi Tayná! Li os depoimentos dos seus clientes e quero fazer minha simulação.`,
   faq: "Oi Tayná! Fiquei com uma dúvida depois de ler seu site. Pode me ajudar?",
   rodape: `Oi Tayná! Vim pelo site e quero mais informações sobre o ${NOME_CURTO}.`,
   "botao-flutuante": `Oi Tayná! Quero falar sobre o ${NOME_CURTO}.`,
@@ -545,6 +604,7 @@ export type Origem = keyof typeof mensagens;
 
 export const PENDENCIAS = [
   "contato.creci — CRECI da Tayna. UNICO bloqueio que sobrou. Obrigatorio por lei (6.530/78).",
+  "contato.whatsapp — trocar pelo numero definitivo quando o cliente passar.",
   "Autorizacao por escrito da Cury para usar os renders do empreendimento nesta pagina.",
   "Autorizacao de uso de imagem das pessoas que aparecem nas fotos de prova social.",
 ] as const;

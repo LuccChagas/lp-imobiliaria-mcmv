@@ -49,8 +49,11 @@ export function Empreendimento() {
         <Reveal atraso={160} className="mt-10">
           <Galeria
             itens={empreendimento.galeria}
-            className="sm:grid-cols-2 lg:grid-cols-3"
+            modo="carrossel"
             proporcao="aspect-[4/3]"
+            larguraCartao="w-64 sm:w-80"
+            duracao="60s"
+            sizes="(min-width: 640px) 20rem, 16rem"
           />
         </Reveal>
 

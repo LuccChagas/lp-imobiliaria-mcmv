@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { IconeInstagram } from "./ui/Icones";
 import { CtaWhatsApp } from "./ui/CtaWhatsApp";
 import {
   contato,
@@ -71,34 +70,22 @@ export function Rodape() {
             <p className="text-[0.8125rem] font-semibold tracking-[0.12em] text-ouro-300 uppercase">
               Contato
             </p>
-            <ul className="mt-4 grid gap-3">
-              <li>
-                <a
-                  href={`https://instagram.com/${contato.instagram}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 text-[0.9375rem] text-azul-200 transition-colors hover:text-white"
-                >
-                  <IconeInstagram className="h-4 w-4 shrink-0" />
-                  @{contato.instagram}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contato.siteDela}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[0.9375rem] text-azul-200 transition-colors hover:text-white"
-                >
-                  apartamentofacilitado.net
-                </a>
-              </li>
-              <li className="pt-1">
-                <CtaWhatsApp origem="rodape" tamanho="medio" variante="ouro">
-                  Falar no WhatsApp
-                </CtaWhatsApp>
-              </li>
-            </ul>
+            {/* So dois canais, por decisao do cliente. */}
+            <p className="mt-4 max-w-xs text-[0.9375rem] leading-relaxed text-azul-200">
+              O atendimento acontece pelo WhatsApp ou pelo formulário desta
+              página. É por ali que eu respondo.
+            </p>
+            <div className="mt-5 flex flex-col gap-3">
+              <CtaWhatsApp origem="rodape" tamanho="medio" variante="ouro">
+                Falar no WhatsApp
+              </CtaWhatsApp>
+              <a
+                href="#formulario"
+                className="inline-flex items-center justify-center rounded-xl border border-white/25 px-5 py-3 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                Deixar meus dados
+              </a>
+            </div>
           </div>
         </div>
 

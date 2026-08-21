@@ -17,8 +17,12 @@ export function Plantas() {
         <Reveal atraso={100} className="mt-12">
           <Galeria
             itens={plantas.itens}
-            className="sm:grid-cols-2 lg:grid-cols-3"
+            modo="carrossel"
             proporcao="aspect-[4/3]"
+            larguraCartao="w-64 sm:w-80"
+            duracao="65s"
+            sizes="(min-width: 640px) 20rem, 16rem"
+            larguraDialogo="w-[min(96vw,64rem)]"
           />
         </Reveal>
 

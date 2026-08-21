@@ -114,12 +114,12 @@ export function Hero() {
           <Reveal atraso={320}>
             <div className="mt-9 flex items-center gap-4 border-t border-white/15 pt-6 sm:gap-5">
               <Image
-                src={sobre.fotoContrato.src}
-                alt={sobre.fotoContrato.alt}
-                width={sobre.fotoContrato.largura}
-                height={sobre.fotoContrato.altura}
+                src={sobre.fotoRetrato.src}
+                alt={sobre.fotoRetrato.alt}
+                width={sobre.fotoRetrato.largura}
+                height={sobre.fotoRetrato.altura}
                 sizes="(min-width: 640px) 112px, 88px"
-                className="h-22 w-22 shrink-0 rounded-2xl border-2 border-ouro-500/70 object-cover object-[58%_16%] shadow-[0_14px_32px_-14px_rgb(6_25_49_/_0.85)] sm:h-28 sm:w-28"
+                className="h-22 w-22 shrink-0 rounded-2xl border-2 border-ouro-500/70 object-cover object-[center_22%] shadow-[0_14px_32px_-14px_rgb(6_25_49_/_0.85)] sm:h-28 sm:w-28"
               />
               <p className="text-[0.9375rem] leading-snug text-azul-100">
                 Atendimento direto com{" "}

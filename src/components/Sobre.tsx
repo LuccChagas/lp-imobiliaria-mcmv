@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Reveal } from "./ui/Reveal";
 import { CtaWhatsApp } from "./ui/CtaWhatsApp";
-import { IconeCheck, IconeInstagramColorido } from "./ui/Icones";
-import { contato, pessoa, sobre } from "@/lib/site";
+import { CtaFormulario } from "./ui/CtaFormulario";
+import { IconeCheck } from "./ui/Icones";
+import { contato, sobre } from "@/lib/site";
 
 export function Sobre() {
   return (
@@ -26,10 +27,10 @@ export function Sobre() {
 
             <div className="absolute -right-3 -bottom-10 w-32 overflow-hidden rounded-2xl border-4 border-superficie bg-tinta-100 shadow-[0_18px_40px_-20px_rgb(6_25_49_/_0.55)] sm:-right-5 sm:w-40">
               <Image
-                src={sobre.fotoInstitucional.src}
-                alt={sobre.fotoInstitucional.alt}
-                width={sobre.fotoInstitucional.largura}
-                height={sobre.fotoInstitucional.altura}
+                src={sobre.fotoCaminhando.src}
+                alt={sobre.fotoCaminhando.alt}
+                width={sobre.fotoCaminhando.largura}
+                height={sobre.fotoCaminhando.altura}
                 sizes="160px"
                 className="aspect-[3/4] w-full object-cover object-center"
               />
@@ -99,8 +100,8 @@ export function Sobre() {
           </Reveal>
 
           <Reveal atraso={230}>
-            {/* Mesma altura nos dois e nenhum quebra em duas linhas.
-                Se nao couberem lado a lado, o do Instagram desce inteiro. */}
+            {/* Apenas dois caminhos daqui: WhatsApp ou formulario.
+                Nenhum link que tire a pessoa da pagina. */}
             <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row lg:flex-col xl:flex-row">
               <CtaWhatsApp
                 origem="sobre"
@@ -108,16 +109,13 @@ export function Sobre() {
               >
                 {sobre.cta}
               </CtaWhatsApp>
-              <a
-                href={`https://instagram.com/${contato.instagram}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Instagram de ${pessoa.nome}: @${contato.instagram}`}
-                className="inline-flex min-h-[3.625rem] w-full items-center justify-center gap-2 rounded-xl border border-tinta-300 bg-superficie px-4 text-[0.875rem] font-semibold whitespace-nowrap text-azul-800 transition-colors hover:border-azul-300 hover:bg-azul-50 sm:w-auto lg:w-full xl:w-auto"
+              <CtaFormulario
+                origem="sobre"
+                className="min-h-[3.625rem] w-full whitespace-nowrap sm:w-auto lg:w-full xl:w-auto"
+                variante="contorno"
               >
-                <IconeInstagramColorido className="h-5 w-5 shrink-0" />
-                @{contato.instagram}
-              </a>
+                Deixar meus dados
+              </CtaFormulario>
             </div>
           </Reveal>
         </div>

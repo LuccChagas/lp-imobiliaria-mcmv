@@ -14,8 +14,14 @@ export type ItemGaleria = {
 
 type Props = {
   itens: readonly ItemGaleria[];
-  /** "grade" = grid estatico. "carrossel" = faixa que rola sozinha. */
-  modo?: "grade" | "carrossel";
+  /**
+   * "grade"     — grid estatico.
+   * "carrossel" — faixa que rola sozinha; so vale a pena com muitos itens,
+   *               senao a duplicacao do ciclo fica visivel e parece defeito.
+   * "faixa"     — rolagem horizontal no celular, grid no desktop. Ideal para
+   *               poucos itens.
+   */
+  modo?: "grade" | "carrossel" | "faixa";
   className?: string;
   proporcao?: string;
   comLegenda?: boolean;
@@ -27,8 +33,10 @@ type Props = {
   larguraDialogo?: string;
   /** Duracao de uma volta completa do carrossel. */
   duracao?: string;
-  /** Largura de cada cartao no modo carrossel. */
+  /** Largura de cada cartao nos modos carrossel e faixa. */
   larguraCartao?: string;
+  /** Colunas do grid quando o modo "faixa" chega no desktop. */
+  colunasFaixa?: string;
 };
 
 /**
@@ -46,6 +54,7 @@ export function Galeria({
   larguraDialogo = "w-[min(96vw,72rem)]",
   duracao = "70s",
   larguraCartao = "w-44 sm:w-56",
+  colunasFaixa = "sm:grid-cols-3",
 }: Props) {
   const dialogo = useRef<HTMLDialogElement>(null);
   const [atual, setAtual] = useState<number | null>(null);
@@ -150,6 +159,25 @@ export function Galeria({
             ))}
           </div>
         </div>
+      ) : modo === "faixa" ? (
+        <ul
+          className={cn(
+            "flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2",
+            "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            "sm:grid sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0",
+            colunasFaixa,
+            className,
+          )}
+        >
+          {itens.map((it, indice) => (
+            <li
+              key={it.src + indice}
+              className={cn("shrink-0 snap-center sm:w-auto", larguraCartao)}
+            >
+              <Cartao it={it} indice={indice} />
+            </li>
+          ))}
+        </ul>
       ) : (
         <ul className={cn("grid gap-3", className)}>
           {itens.map((it, indice) => (

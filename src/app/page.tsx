@@ -8,6 +8,7 @@ import { Localizacao } from "@/components/Localizacao";
 import { Condicoes } from "@/components/Condicoes";
 import { ComoFunciona } from "@/components/ComoFunciona";
 import { Sobre } from "@/components/Sobre";
+import { Depoimentos } from "@/components/Depoimentos";
 import { Provas } from "@/components/Provas";
 import { Faq } from "@/components/Faq";
 import { SecaoFormulario } from "@/components/FormularioLead";
@@ -100,6 +101,7 @@ export default function Pagina() {
         <Condicoes />
         <ComoFunciona />
         <Sobre />
+        <Depoimentos />
         <Provas />
         <Faq />
         <SecaoFormulario />
