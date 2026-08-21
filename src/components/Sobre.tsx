@@ -9,7 +9,6 @@ export function Sobre() {
   return (
     <section id="sobre" className="border-y border-tinta-200 bg-superficie">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-16">
-        {/* Foto institucional com a foto do contrato encaixada no canto */}
         <Reveal className="relative">
           <div className="relative mx-auto w-full max-w-md">
             {/* A foto do contrato e a principal: assinatura na mao vale mais

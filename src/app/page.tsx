@@ -24,6 +24,7 @@ import {
   meta,
   pessoa,
   resolverUrl,
+  sobre,
 } from "@/lib/site";
 
 function dadosEstruturados() {
@@ -60,7 +61,7 @@ function dadosEstruturados() {
       jobTitle: pessoa.cargo,
       worksFor: { "@type": "Organization", name: pessoa.empresa },
       url,
-      image: `${url}/tayna/institucional.jpg`,
+      image: `${url}${sobre.fotoRetrato.src}`,
       description: meta.descricao,
       areaServed: { "@type": "City", name: "São Paulo" },
       telephone: `+${contato.whatsapp}`,
