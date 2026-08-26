@@ -42,10 +42,10 @@ export function Faq() {
 
         <Reveal atraso={100} className="mt-10 text-center">
           <p className="text-[0.9375rem] text-tinta-600">
-            Ficou com outra dúvida?
+            {faq.chamadaFinal}
           </p>
           <CtaPrincipal origem="faq" className="mt-4">
-            Perguntar para a Tayná
+            {faq.cta}
           </CtaPrincipal>
         </Reveal>
       </div>

@@ -378,7 +378,7 @@ export const sobre = {
     "Especialista em financiamento Caixa e MCMV",
     "Atendimento em toda a Grande São Paulo",
   ],
-  cta: "Quero falar com a Tayná",
+  cta: "Falar com especialista agora",
   fotoCaminhando: {
     src: "/tayna/caminhando.jpg",
     largura: 1000,
@@ -477,6 +477,8 @@ export const depoimentos = {
 export const faq = {
   sobretitulo: "Dúvidas frequentes",
   titulo: "O que todo mundo me pergunta antes de começar",
+  chamadaFinal: "Ficou com outra dúvida?",
+  cta: "Perguntar ao nosso time",
   itens: [
     {
       pergunta: "A entrada é mesmo a partir de R$ 800?",
