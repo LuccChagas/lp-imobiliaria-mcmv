@@ -1,14 +1,14 @@
 /**
  * FONTE UNICA DE VERDADE
  * ----------------------------------------------------------------------------
- * Landing page focada em UM empreendimento: Parque das Nacoes — Condominio
- * Granja Julieta (Cury), com a gerente Tayna Paschoal como quem atende.
+ * Landing page focada em UM empreendimento: Cidade Parque Guarapiranga —
+ * Condominio Atlantica (Cury), com a gerente Tayna Paschoal como quem atende.
  *
  * Todo texto, numero, foto, item de lazer e pergunta do FAQ mora aqui.
  * Para mudar qualquer palavra da pagina voce NAO precisa abrir nenhum .tsx.
  *
  * Origem dos dados:
- *   - cury.net/imovel/SP/zona-sul/parque-das-nacoes-condominio-granja-julieta
+ *   - cury.net/imovel/SP/zona-sul/cidade-parque-guarapiranga-condominio-atlantica
  *   - apartamentofacilitado.net (site da Tayna)
  * O que ainda for provisorio esta listado em `PENDENCIAS`, no fim do arquivo.
  */
@@ -81,8 +81,7 @@ export const pessoa = {
 export const navegacao = [
   { rotulo: "O empreendimento", ancora: "#empreendimento" },
   { rotulo: "Lazer", ancora: "#lazer" },
-  { rotulo: "Plantas", ancora: "#plantas" },
-  { rotulo: "Localização", ancora: "#localizacao" },
+  { rotulo: "A região", ancora: "#localizacao" },
   { rotulo: "Condições", ancora: "#condicoes" },
   { rotulo: "Dúvidas", ancora: "#faq" },
 ] as const;
@@ -93,27 +92,27 @@ export const navegacao = [
 
 export const hero = {
   selo: "Lançamento · Zona Sul de São Paulo",
-  empreendimento: "Parque das Nações",
-  empreendimentoComplemento: "Condomínio Granja Julieta",
-  titulo: "Apartamento de 1 e 2 dormitórios ao lado da",
-  tituloDestaque: "Estação Granja Julieta",
+  empreendimento: "Cidade Parque Guarapiranga",
+  empreendimentoComplemento: "Condomínio Atlântica",
+  titulo: "Apartamento de 1 e 2 dormitórios pertinho da",
+  tituloDestaque: "Represa de Guarapiranga",
   subtitulo:
-    "Com opção de suíte, terraço e vaga. Lazer completo com piscina, beach tennis e mais 10 espaços. Financiamento pela Caixa com Minha Casa Minha Vida.",
+    "Com opção de suíte, terraço e vaga. Lazer completo com piscinas, beach tennis, coworking e sport bar. Financiamento pela Caixa com Minha Casa Minha Vida.",
   destaqueValor: "R$ 800",
   destaqueRotulo: "entrada a partir de",
   destaqueApoio: "ou entrada parcelada no boleto",
   itens: [
-    "Ao lado da Estação Granja Julieta",
+    "Ao lado do Parque da Represa de Guarapiranga",
     "1 e 2 dormitórios com opção de suíte",
     "Terraço, vaga e lazer completo",
   ],
   ctaPrimario: "Quero simular pelo WhatsApp",
   ctaSecundario: "Ver o empreendimento",
   imagem: {
-    src: "/empreendimento/fachada-noite.jpg",
+    src: "/empreendimento/fachada.jpg",
     largura: 1440,
     altura: 900,
-    alt: "Perspectiva ilustrativa das torres do Parque das Nações Condomínio Granja Julieta",
+    alt: "Perspectiva ilustrativa das torres do Cidade Parque Guarapiranga Condomínio Atlântica",
   } satisfies Foto,
 } as const;
 
@@ -136,24 +135,34 @@ export const selos = {
 
 export const empreendimento = {
   sobretitulo: "O empreendimento",
-  nome: "Parque das Nações — Condomínio Granja Julieta",
+  nome: "Cidade Parque Guarapiranga — Condomínio Atlântica",
   status: "Lançamento",
-  bairro: "Jardim Caravelas · Chácara Santo Antônio",
+  bairro: "Socorro",
   zona: "Zona Sul de São Paulo",
   descricao:
-    "Apartamentos de 1 e 2 dormitórios com opção de suíte, terraço e vaga. Ao lado da Estação Granja Julieta, com o Morumbi Shopping e a Universidade São Judas a poucos minutos.",
+    "Apartamentos de 1 e 2 dormitórios com opção de suíte, terraço e vaga, a poucos passos do Parque da Barragem da Represa de Guarapiranga.",
   fichaTecnica: [
     { rotulo: "Dormitórios", valor: "1 e 2 dormitórios" },
     { rotulo: "Opcionais", valor: "Suíte, terraço e vaga" },
     { rotulo: "Situação", valor: "Lançamento — na planta" },
-    { rotulo: "Total de unidades", valor: "840 unidades" },
+    { rotulo: "Total de unidades", valor: "1.632 unidades" },
   ],
+  /**
+   * Diferente do lancamento anterior, este JA TEM incorporacao registrada em
+   * cartorio. E seguranca juridica real para quem compra na planta — por isso
+   * aparece na pagina, e nao so na letra miuda do rodape.
+   */
+  registro: {
+    rotulo: "Incorporação já registrada em cartório",
+    valor: "Registrada em 07/07/2026",
+    detalhe:
+      "R.6 da matrícula 545.904, no 11º Oficial de Registro de Imóveis de São Paulo/SP.",
+  },
   galeria: [
-    { src: "/empreendimento/fachada-rua.jpg", alt: "Perspectiva ilustrativa da fachada vista da rua", largura: 1400, altura: 875 },
-    { src: "/empreendimento/piscina.jpg", alt: "Perspectiva ilustrativa da piscina do condomínio", largura: 800, altura: 800 },
-    { src: "/empreendimento/rooftop.jpg", alt: "Perspectiva ilustrativa do terraço com vista para a cidade", largura: 1200, altura: 750 },
-    { src: "/empreendimento/hall.jpg", alt: "Perspectiva ilustrativa do hall de entrada", largura: 1200, altura: 750 },
-    { src: "/empreendimento/lounge.jpg", alt: "Perspectiva ilustrativa do lounge ao ar livre", largura: 1200, altura: 750 },
+    { src: "/empreendimento/fachada-entardecer.jpg", alt: "Perspectiva ilustrativa das torres ao entardecer", largura: 565, altura: 475 },
+    { src: "/empreendimento/piscina-deck.jpg", alt: "Perspectiva ilustrativa da piscina com deck e paisagismo", largura: 1400, altura: 486 },
+    { src: "/empreendimento/piscina-solarium.jpg", alt: "Perspectiva ilustrativa da piscina com solário e espreguiçadeiras", largura: 565, altura: 475 },
+    { src: "/empreendimento/portaria.jpg", alt: "Perspectiva ilustrativa da portaria e do acesso ao condomínio", largura: 1200, altura: 750 },
     { src: "/empreendimento/piscina-lazer.jpg", alt: "Perspectiva ilustrativa da área de lazer com piscina", largura: 565, altura: 475 },
   ],
   avisoIlustrativa:
@@ -166,57 +175,31 @@ export const empreendimento = {
 
 export const lazer = {
   sobretitulo: "Lazer completo",
-  titulo: "12 espaços para usar sem sair de casa",
+  titulo: "Oito espaços para usar sem sair de casa",
   descricao:
-    "O condomínio entrega uma estrutura que normalmente só aparece em empreendimento de alto padrão. Tudo dentro do condomínio, incluso no seu apartamento.",
+    "Da piscina ao coworking. Tudo dentro do condomínio, incluso no seu apartamento.",
+  /**
+   * A Cury publicou poucos renders deste empreendimento e nenhum das areas
+   * internas. Entao aqui entram so as fotos que existem de verdade, e a lista
+   * oficial completa aparece como etiqueta. Usar render de outro condominio
+   * para preencher seria propaganda enganosa.
+   */
   comFoto: [
-    { nome: "Piscinas", src: "/empreendimento/piscina.jpg", largura: 800, altura: 800 },
-    { nome: "Beach Tennis", src: "/empreendimento/beach-tennis.jpg", largura: 1200, altura: 750 },
-    { nome: "Churrasqueira", src: "/empreendimento/churrasqueira.jpg", largura: 1200, altura: 750 },
-    { nome: "Fitness", src: "/empreendimento/fitness.jpg", largura: 1200, altura: 750 },
-    { nome: "Playground", src: "/empreendimento/playground.jpg", largura: 1200, altura: 750 },
-    { nome: "Pet Place", src: "/empreendimento/pet-place.jpg", largura: 1200, altura: 750 },
-    { nome: "Brinquedoteca", src: "/empreendimento/brinquedoteca.jpg", largura: 1200, altura: 750 },
-    { nome: "Easy Market", src: "/empreendimento/easy-market.jpg", largura: 1200, altura: 750 },
-    { nome: "Lavanderia", src: "/empreendimento/lavanderia.jpg", largura: 1200, altura: 750 },
-    { nome: "Salão de Festas", src: "/empreendimento/salao-festas.jpg", largura: 1200, altura: 750 },
-    { nome: "Quadra", src: "/empreendimento/quadra.jpg", largura: 1200, altura: 750 },
-    { nome: "Bicicletário", src: "/empreendimento/bicicletario.jpg", largura: 1200, altura: 750 },
+    { nome: "Piscinas", src: "/empreendimento/piscina-solarium.jpg", largura: 565, altura: 475 },
+    { nome: "Deck e paisagismo", src: "/empreendimento/piscina-deck.jpg", largura: 1400, altura: 486 },
+    { nome: "Área de lazer", src: "/empreendimento/piscina-lazer.jpg", largura: 565, altura: 475 },
   ],
-  /** Lista oficial da Cury. Horta e Sauna nao tem render publicado. */
+  /** Lista oficial da Cury para o Condominio Atlantica. */
   listaCompleta: [
     "Piscinas",
     "Beach Tennis",
     "Churrasqueira",
-    "Pet Place",
-    "Playground",
-    "Horta",
-    "Lavanderia",
-    "Fitness",
-    "Sauna",
+    "Espaço Beleza",
     "Brinquedoteca",
-    "Easy Market",
-    "Salão de Festas",
+    "Fitness",
+    "Sport Bar",
+    "Coworking",
   ],
-} as const;
-
-/* -------------------------------------------------------------------------- */
-/* 5. Plantas                                                                  */
-/* -------------------------------------------------------------------------- */
-
-export const plantas = {
-  sobretitulo: "Plantas",
-  titulo: "Escolha a planta que cabe na sua família",
-  descricao:
-    "Toque em qualquer planta para ampliar. As metragens e a disposição final constam no memorial descritivo, que eu te mando antes de qualquer assinatura.",
-  itens: [1, 2, 3, 4, 5, 6].map((n) => ({
-    src: `/plantas/planta-${n}.jpg`,
-    alt: `Planta ${n} do Parque das Nações Condomínio Granja Julieta`,
-    largura: 1400,
-    altura: 875,
-  })),
-  aviso:
-    "Plantas ilustrativas. Decoração e mobiliário não fazem parte do contrato.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -224,27 +207,61 @@ export const plantas = {
 /* -------------------------------------------------------------------------- */
 
 export const localizacao = {
-  sobretitulo: "Localização",
-  titulo: "Zona Sul, ao lado do trem",
+  sobretitulo: "A região",
+  titulo: "Zona Sul, do lado da represa",
   descricao:
-    "Uma das regiões mais bem servidas de São Paulo: comércio, hospitais, escolas e universidade no entorno, e a estação a pé.",
+    "Socorro fica entre a Represa de Guarapiranga e o eixo de Santo Amaro: comércio, trem e parque, tudo na mesma região.",
   enderecoEmpreendimento: {
     rotulo: "Empreendimento",
-    linha1: "Rua Luiz Seraphico Junior, 326",
-    linha2: "Jardim Caravelas · São Paulo — SP",
+    linha1: "Rua Olívia Guedes Penteado, s/n",
+    linha2: "Socorro · São Paulo — SP",
   },
   enderecoStand: {
     rotulo: "Stand de vendas",
-    linha1: "Rua Bragança Paulista, 845",
-    linha2: "Vila Cruzeiro · São Paulo — SP",
+    linha1: "Av. Rio Bonito, 41",
+    linha2: "Socorro · São Paulo — SP",
   },
-  proximidades: [
-    { nome: "Estação Granja Julieta", detalhe: "CPTM Linha 9-Esmeralda" },
-    { nome: "Estação Alto da Boa Vista", detalhe: "CPTM Linha 9-Esmeralda" },
-    { nome: "Universidade São Judas", detalhe: "Campus Santo Amaro" },
-    { nome: "Morumbi Shopping", detalhe: "Poucos minutos de carro" },
-    { nome: "Shopping Parque da Cidade", detalhe: "Fácil acesso" },
+  /**
+   * Pontos de interesse da regiao. Todos verificados: os tres primeiros
+   * constam da propria pagina do empreendimento na Cury; os demais foram
+   * conferidos como existentes na regiao.
+   *
+   * NAO ha distancia nem tempo aqui de proposito — nenhum numero desses foi
+   * medido. Se o cliente medir e quiser publicar, e so preencher `detalhe`.
+   */
+  pontosDeInteresse: [
+    {
+      grupo: "Parques e lazer",
+      itens: [
+        { nome: "Parque da Barragem da Represa de Guarapiranga", detalhe: "Orla, ciclovia e área de lazer" },
+        { nome: "Represa de Guarapiranga", detalhe: "Um dos maiores espelhos d'água da cidade" },
+      ],
+    },
+    {
+      grupo: "Trem e mobilidade",
+      itens: [
+        { nome: "Estação Socorro", detalhe: "CPTM Linha 9-Esmeralda" },
+        { nome: "Estação Jurubatuba", detalhe: "CPTM Linha 9-Esmeralda" },
+        { nome: "Av. Atlântica e Av. Rio Bonito", detalhe: "Acesso direto pelo bairro" },
+      ],
+    },
+    {
+      grupo: "Compras e serviços",
+      itens: [
+        { nome: "Shopping SP Market", detalhe: "Na região" },
+        { nome: "Largo Treze · Santo Amaro", detalhe: "Polo de comércio da Zona Sul" },
+        { nome: "Tenda Atacadista", detalhe: "Nas proximidades" },
+      ],
+    },
+    {
+      grupo: "Aeroporto",
+      itens: [
+        { nome: "Aeroporto de Congonhas", detalhe: "O mais próximo, na própria Zona Sul" },
+      ],
+    },
   ],
+  avisoPontos:
+    "Pontos de referência da região, informados sem distância ou tempo de deslocamento.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -288,13 +305,12 @@ export const condicoes = {
         "É exatamente o perfil do programa. Quem nunca teve imóvel próprio costuma entrar nas melhores condições.",
     },
   ],
-  faixasTitulo: "Este empreendimento atende três faixas",
+  faixasTitulo: "Como as 1.632 unidades se dividem",
   faixasDescricao:
-    "As unidades são distribuídas por faixa de renda, conforme o registro do empreendimento:",
+    "A distribuição por faixa de renda consta do registro de incorporação do empreendimento:",
   faixas: [
-    { unidades: "117", tipo: "unidades HIS-1", renda: "famílias de até 3 salários mínimos" },
-    { unidades: "602", tipo: "unidades HIS-2", renda: "famílias de 3 a 6 salários mínimos" },
-    { unidades: "121", tipo: "unidades R2V", renda: "sem limite de renda" },
+    { unidades: "1.336", tipo: "unidades HIS-2", renda: "famílias de 3 a 6 salários mínimos" },
+    { unidades: "296", tipo: "unidades R2V", renda: "sem limite de renda" },
   ],
   aviso:
     "Condições sujeitas à análise de crédito da Caixa Econômica Federal e às regras vigentes do Minha Casa Minha Vida. Valores e disponibilidade podem mudar sem aviso. Nenhuma aprovação é garantida antes da análise.",
@@ -324,7 +340,7 @@ export const passos = {
       numero: "03",
       titulo: "A gente visita o stand",
       texto:
-        "Você conhece o decorado, vê a planta ao vivo e escolhe a unidade. Fica na Rua Bragança Paulista, 845.",
+        "Você conhece o decorado, vê a planta ao vivo e escolhe a unidade. Fica na Av. Rio Bonito, 41, no Socorro.",
     },
     {
       numero: "04",
@@ -504,6 +520,24 @@ export const faq = {
 /* -------------------------------------------------------------------------- */
 
 export const formulario = {
+  /**
+   * A pagina tem DUAS instancias do mesmo formulario: uma logo apos a dobra
+   * (#simulacao) para quem ja chega decidido, e a completa no fim
+   * (#formulario). Sao os mesmos campos; muda so a moldura.
+   */
+  antecipado: {
+    sobretitulo: "Análise gratuita",
+    titulo: "Descubra agora se você consegue financiar",
+    descricao:
+      "Dois campos e eu já te digo o que dá para fazer no seu caso. Sem custo e sem compromisso.",
+    itens: [
+      "Parcelas que cabem no seu bolso",
+      "Use o FGTS como entrada",
+      "Subsídio do Minha Casa Minha Vida",
+      "Autônomo e MEI também conseguem",
+      "Nome com restrição? Vale tentar",
+    ],
+  },
   sobretitulo: "Simulação sem compromisso",
   titulo: "Me manda seus dados que eu te chamo",
   descricao:
@@ -544,7 +578,7 @@ export const rodape = {
    * qualquer publicidade de empreendimento ainda nao registrado.
    */
   avisoLegal:
-    "CCISA 195 INCORPORADORA LTDA. (PARQUE DAS NAÇÕES — CONDOMÍNIO GRANJA JULIETA). A comercialização do empreendimento ocorrerá somente após o registro de incorporação no cartório de imóveis competente, conforme determina a Lei nº 4.591/64. Com 117 unidades HIS-1 para famílias de até 3 salários mínimos, 602 unidades HIS-2 para famílias de 3 a 6 salários mínimos e 121 unidades R2V sem limite de renda. Compradores com renda mensal acima dos limites mencionados podem adquirir as unidades para investimento nos termos do Decreto Municipal 63.130/2024. Para mais informações, consulte a Central de Vendas da Cury (CNPJ 14.055.045/0001-78 — CCISA 08 Consultoria Imobiliária Ltda. — CRECI 23.670-J).",
+    "CCISA 209 INCORPORADORA LTDA. (CIDADE PARQUE GUARAPIRANGA — CONDOMÍNIO ATLÂNTICA). Incorporação registrada em 07/07/2026, R.6 da matrícula 545.904 do 11º Oficial de Registro de Imóveis da Comarca de São Paulo/SP. Com 1.336 unidades HIS-2 para famílias de 3 a 6 salários mínimos e 296 unidades R2V sem limite de renda. Compradores com renda mensal acima dos limites mencionados podem adquirir as unidades para investimento nos termos do Decreto Municipal 63.130/2024. Para mais informações, consulte a Central de Vendas da Cury (CNPJ 14.055.045/0001-78 — CCISA 08 Consultoria Imobiliária Ltda. — CRECI 23.670-J).",
   avisoIlustrativo:
     "Todas as imagens desta página são perspectivas artísticas ilustrativas. Móveis, equipamentos, decoração e paisagismo não fazem parte do contrato. Valores, condições de pagamento e disponibilidade de unidades estão sujeitos a alteração sem aviso prévio e dependem de análise de crédito.",
   avisoNaoOficial:
@@ -557,15 +591,15 @@ export const rodape = {
 
 export const meta = {
   titulo:
-    "Parque das Nações Granja Julieta · Apartamentos com entrada a partir de R$ 800",
+    "Cidade Parque Guarapiranga Atlântica · Apartamentos com entrada a partir de R$ 800",
   descricao:
-    "Apartamentos de 1 e 2 dormitórios ao lado da Estação Granja Julieta, Zona Sul de SP. Entrada a partir de R$ 800 ou parcelada, financiamento Caixa e Minha Casa Minha Vida. Atendimento com a gerente Tayná Paschoal.",
+    "Apartamentos de 1 e 2 dormitórios no Socorro, Zona Sul de SP, ao lado do Parque da Represa de Guarapiranga. Entrada a partir de R$ 800 ou parcelada, financiamento Caixa e Minha Casa Minha Vida. Atendimento com a gerente Tayná Paschoal.",
   palavras: [
-    "parque das nações granja julieta",
-    "apartamento granja julieta",
-    "apartamento zona sul sp minha casa minha vida",
-    "cury granja julieta",
-    "entrada parcelada apartamento sp",
+    "cidade parque guarapiranga",
+    "condomínio atlântica cury",
+    "apartamento socorro são paulo",
+    "apartamento guarapiranga minha casa minha vida",
+    "entrada parcelada apartamento zona sul sp",
   ],
 } as const;
 
@@ -577,7 +611,7 @@ export function linkWhatsApp(mensagem: string) {
   return `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
-const NOME_CURTO = "Parque das Nações Granja Julieta";
+const NOME_CURTO = "Cidade Parque Guarapiranga — Atlântica";
 
 /** Mensagem pre-preenchida por origem — reduz o atrito de ter que pensar. */
 export const mensagens = {
@@ -585,7 +619,6 @@ export const mensagens = {
   hero: `Oi Tayná! Quero simular meu apartamento no ${NOME_CURTO}. Pode me ajudar?`,
   empreendimento: `Oi Tayná! Vi as fotos do ${NOME_CURTO} e queria saber mais sobre as unidades.`,
   lazer: `Oi Tayná! Vi a área de lazer do ${NOME_CURTO} e queria mais informações.`,
-  plantas: `Oi Tayná! Vi as plantas do ${NOME_CURTO} e queria saber os valores.`,
   localizacao: `Oi Tayná! Queria visitar o stand do ${NOME_CURTO}. Como funciona?`,
   condicoes: `Oi Tayná! Queria fazer a simulação para saber se eu consigo ser aprovado.`,
   sobre: `Oi Tayná! Vim pelo site e gostaria de falar com você sobre o ${NOME_CURTO}.`,
@@ -605,6 +638,8 @@ export type Origem = keyof typeof mensagens;
 export const PENDENCIAS = [
   "contato.creci — CRECI da Tayna. UNICO bloqueio que sobrou. Obrigatorio por lei (6.530/78).",
   "contato.whatsapp — trocar pelo numero definitivo quando o cliente passar.",
+  "hero.destaqueValor — 'entrada a partir de R$ 800' veio do site dela como condicao geral. CONFIRMAR se vale para o Condominio Atlantica antes de rodar trafego.",
+  "A Cury nao publicou plantas deste empreendimento. Se ela conseguir o material, da para reativar a secao.",
   "Autorizacao por escrito da Cury para usar os renders do empreendimento nesta pagina.",
   "Autorizacao de uso de imagem das pessoas que aparecem nas fotos de prova social.",
 ] as const;

@@ -15,20 +15,22 @@ export function Condicoes() {
           descricao={condicoes.descricao}
         />
 
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {condicoes.itens.map((item, indice) => (
             <Reveal key={item.titulo} como="li" atraso={indice * 60}>
-              <div className="h-full rounded-2xl border border-tinta-200 bg-superficie p-5 transition-colors hover:border-ouro-500/50">
-                <span
-                  aria-hidden="true"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-verde-50 text-verde-600"
-                >
-                  <IconeCheck className="h-5 w-5" />
-                </span>
-                <h3 className="font-titulo mt-4 text-[1.0625rem] leading-snug font-bold text-azul-900">
-                  {item.titulo}
-                </h3>
-                <p className="mt-2 text-[0.9375rem] leading-relaxed text-tinta-600">
+              <div className="h-full rounded-2xl border border-tinta-200 bg-superficie p-4 transition-colors hover:border-ouro-500/50 sm:p-5">
+                <div className="flex items-start gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-verde-50 text-verde-600"
+                  >
+                    <IconeCheck className="h-4.5 w-4.5" />
+                  </span>
+                  <h3 className="font-titulo text-[1.0625rem] leading-snug font-bold text-azul-900">
+                    {item.titulo}
+                  </h3>
+                </div>
+                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-tinta-600">
                   {item.texto}
                 </p>
               </div>

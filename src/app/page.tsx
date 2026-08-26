@@ -3,7 +3,6 @@ import { Hero } from "@/components/Hero";
 import { Selos } from "@/components/Selos";
 import { Empreendimento } from "@/components/Empreendimento";
 import { Lazer } from "@/components/Lazer";
-import { Plantas } from "@/components/Plantas";
 import { Localizacao } from "@/components/Localizacao";
 import { Condicoes } from "@/components/Condicoes";
 import { ComoFunciona } from "@/components/ComoFunciona";
@@ -95,9 +94,11 @@ export default function Pagina() {
       <main className="flex-1">
         <Hero />
         <Selos />
+        {/* Formulario logo apos a dobra: quem chega de anuncio ja quer
+            saber se consegue, e nao deveria rolar a pagina inteira. */}
+        <SecaoFormulario id="simulacao" compacto />
         <Empreendimento />
         <Lazer />
-        <Plantas />
         <Localizacao />
         <Condicoes />
         <ComoFunciona />

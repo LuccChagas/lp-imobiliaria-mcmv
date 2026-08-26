@@ -38,7 +38,6 @@ export function Lazer() {
         <Reveal atraso={100} className="mt-12">
           <Galeria
             itens={itens}
-            className="grid-cols-2 lg:grid-cols-4"
             proporcao="aspect-square"
             comLegenda
             sizes="(min-width: 1024px) 25vw, 50vw"

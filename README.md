@@ -1,8 +1,11 @@
-# LP — Parque das Nações · Condomínio Granja Julieta
+# LP — Cidade Parque Guarapiranga · Condomínio Atlântica
 
-Landing page satélite de captação para o empreendimento **Parque das Nações — Condomínio
-Granja Julieta** (Cury Construtora, Zona Sul de São Paulo), com atendimento da gerente de
-vendas **Tayná Paschoal**.
+Landing page satélite de captação para o empreendimento **Cidade Parque Guarapiranga —
+Condomínio Atlântica** (Cury Construtora, Socorro, Zona Sul de São Paulo), com atendimento
+da gerente de vendas **Tayná Paschoal**.
+
+> O foco anterior era o Parque das Nações — Granja Julieta, que virou estoque. A estrutura
+> da página é a mesma; o que mudou foi o empreendimento, os assets e o texto legal.
 
 Foco único: uma conversa no WhatsApp. Sem menu para outros empreendimentos, sem saída que
 não seja a conversão.
@@ -67,17 +70,45 @@ Nada aqui é número inventado. Tudo veio de fonte verificável:
 | **+500 apartamentos vendidos** | Texto do site dela |
 | **Entrada a partir de R$ 800** | Site dela, confirmado como válido para este empreendimento |
 | 1 e 2 dorms, suíte, terraço, vaga | Página oficial do empreendimento na Cury |
-| 12 itens de lazer | Lista oficial da Cury |
+| 8 itens de lazer | Lista oficial da Cury para o Atlântica |
 | Endereços do empreendimento e do stand | Página oficial da Cury |
-| Faixas HIS-1 / HIS-2 / R2V | Texto legal de registro do empreendimento |
-| Aviso da Lei 4.591/64 | Reproduzido do material oficial |
+| 1.336 HIS-2 e 296 R2V (1.632 unidades) | Texto legal de registro do empreendimento |
+| Registro da incorporação (07/07/2026) | Texto legal de registro do empreendimento |
+| Pontos de interesse da região | Cury + verificação própria (sem distância inventada) |
 
 ### O texto legal do rodapé não pode sair
 
-`rodape.avisoLegal` reproduz o aviso de registro de incorporação exigido pela **Lei
-4.591/64** para empreendimento ainda não registrado em cartório, mais a composição de
-unidades por faixa de renda e o CNPJ/CRECI da central de vendas. É obrigatório em qualquer
-peça publicitária deste empreendimento. Não remova, não resuma.
+`rodape.avisoLegal` reproduz o registro de incorporação, a composição de unidades por faixa
+de renda e o CNPJ/CRECI da central de vendas. É obrigatório em qualquer peça publicitária
+deste empreendimento. Não remova, não resuma.
+
+Diferença importante em relação ao Granja Julieta: **este empreendimento já tem a
+incorporação registrada** (07/07/2026, R.6 da matrícula 545.904, 11º Oficial de Registro de
+Imóveis de São Paulo/SP). O aviso deixa de ser "a comercialização ocorrerá somente após o
+registro" e passa a informar o registro feito — o que é segurança jurídica real para quem
+compra na planta. Por isso ele também aparece em destaque na seção do empreendimento, e não
+só na letra miúda.
+
+### Não há plantas publicadas
+
+A Cury não publicou nenhuma planta do Condomínio Atlântica, e publicou só 6 renders — nenhum
+das áreas internas. Duas consequências:
+
+- A **seção de plantas foi removida**. Seção sem conteúdo real é pior que seção ausente.
+  No lugar dela, a seção de região ganhou os pontos de interesse.
+- A **seção de lazer** mostra só as 3 fotos que existem de verdade (todas de piscina/deck) e
+  lista os 8 diferenciais oficiais como etiqueta. Usar render de outro condomínio da Cury
+  para preencher seria propaganda enganosa.
+
+Se ela conseguir o material com a construtora, dá para reativar as duas coisas.
+
+### Sobre os pontos de interesse da região
+
+Nenhuma distância ou tempo de deslocamento é publicado, porque nenhum foi medido. Os pontos
+foram verificados como existentes na região: os três primeiros vêm da própria página da Cury,
+e as estações Socorro e Jurubatuba (CPTM Linha 9-Esmeralda), o Shopping SP Market e o Largo
+Treze foram conferidos à parte. Se o cliente medir e quiser publicar tempo, é só preencher
+`detalhe` em `localizacao.pontosDeInteresse`.
 
 ---
 
@@ -129,11 +160,11 @@ Copie `.env.example` para `.env.local`. Todas opcionais — a página funciona c
 
 1. **Hero** — render das torres em tela cheia, nome do empreendimento, **R$ 800** em destaque, e a Tayná já presente com foto e "+500 vendidos"
 2. **Selos** — Caixa, Minha Casa Minha Vida e FGTS
-3. **O empreendimento** — ficha técnica + galeria com ampliação
-4. **Lazer** — 12 espaços com foto, sobre fundo escuro
-5. **Plantas** — 6 plantas, ampliáveis
-6. **Localização** — endereços do empreendimento e do stand, com link para o Maps, e o que tem em volta
-7. **Condições** — entrada, FGTS, subsídio, autônomo, restrição no nome, e as três faixas HIS reais
+3. **Formulário antecipado** — para quem chega de anúncio já decidido (ver abaixo)
+4. **O empreendimento** — ficha técnica, selo de incorporação registrada e galeria
+5. **Lazer** — as 3 fotos que existem + os 8 diferenciais oficiais
+6. **A região** — endereços com link para o Maps e os pontos de interesse agrupados
+7. **Condições** — entrada, FGTS, subsídio, autônomo, restrição no nome, e as duas faixas reais
 8. **Como funciona** — 4 passos
 9. **Sobre a Tayná** — a foto dela com o contrato da Caixa em destaque (prova mais forte que retrato posado), com a foto dela a caminho de um atendimento encaixada, métricas e credenciais
 10. **Depoimentos** — os prints de conversa que ela publica no Instagram, em seção própria e fundo escuro. É a prova mais forte da página: cliente falando com as próprias palavras
@@ -225,6 +256,23 @@ O CTA de `condicoes` é o mais importante: a simulação precisa de renda, FGTS 
 — exatamente os campos do formulário. Ali o formulário vem primeiro e o WhatsApp fica como
 alternativa. Como as duas origens são rastreadas separadamente, dá para comparar depois qual
 canal converte melhor e reequilibrar.
+
+### O formulário aparece duas vezes, de propósito
+
+Com o formulário só no fim, ele ficava a cerca de 15 mil pixels do topo no celular — quase
+ninguém rola até lá. Agora existem **duas instâncias do mesmo formulário**:
+
+| Onde | Âncora | Para quem |
+| --- | --- | --- |
+| Logo depois da dobra e dos selos | `#simulacao` | Quem chega de anúncio já decidido e só quer saber se consegue financiar |
+| No fim, antes do rodapé | `#formulario` | Quem leu a página inteira e se convenceu no caminho |
+
+São os mesmos campos e a mesma rota; muda só a moldura. O antecipado usa uma variante
+compacta (`<SecaoFormulario id="simulacao" compacto />`).
+
+Ele não vem **antes** do produto de propósito: diferente de uma página de oferta genérica,
+aqui o visitante chega sem saber o que é o Atlântica. A dobra apresenta o empreendimento, o
+preço e a região; só então a página pede os dados.
 
 ---
 

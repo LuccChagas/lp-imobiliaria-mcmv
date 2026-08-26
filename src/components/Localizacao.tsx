@@ -8,8 +8,6 @@ function mapa(...partes: string[]) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(partes.join(", "))}`;
 }
 
-/** Sem iframe de mapa: seria uma requisicao externa pesada e uma chave de API
- *  so para mostrar o que dois links resolvem. */
 function CartaoEndereco({
   rotulo,
   linha1,
@@ -25,23 +23,23 @@ function CartaoEndereco({
     <div
       className={
         destaque
-          ? "rounded-2xl border border-ouro-500/45 bg-ouro-50 p-6"
-          : "rounded-2xl border border-tinta-200 bg-superficie p-6"
+          ? "rounded-2xl border border-ouro-500/45 bg-ouro-50 p-5"
+          : "rounded-2xl border border-tinta-200 bg-superficie p-5"
       }
     >
       <p className="flex items-center gap-2 text-[0.6875rem] font-semibold tracking-[0.12em] text-ouro-700 uppercase">
         <IconeLocal className="h-4 w-4" />
         {rotulo}
       </p>
-      <p className="font-titulo mt-3 text-lg leading-snug font-bold text-azul-900">
+      <p className="font-titulo mt-2.5 text-[1.0625rem] leading-snug font-bold text-azul-900">
         {linha1}
       </p>
-      <p className="mt-1 text-[0.9375rem] text-tinta-600">{linha2}</p>
+      <p className="mt-1 text-[0.875rem] text-tinta-600">{linha2}</p>
       <a
         href={mapa(linha1, linha2)}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-azul-700 underline underline-offset-4 hover:text-azul-800"
+        className="mt-3 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-azul-700 underline underline-offset-4 hover:text-azul-800"
       >
         Ver no Google Maps
         <IconeSeta className="h-4 w-4" />
@@ -60,39 +58,46 @@ export function Localizacao() {
           descricao={localizacao.descricao}
         />
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-[1fr_1fr]">
-          <Reveal>
-            <div className="grid gap-4">
-              <CartaoEndereco {...localizacao.enderecoEmpreendimento} />
-              <CartaoEndereco {...localizacao.enderecoStand} destaque />
-            </div>
-          </Reveal>
+        <Reveal atraso={80} className="mt-12">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <CartaoEndereco {...localizacao.enderecoEmpreendimento} />
+            <CartaoEndereco {...localizacao.enderecoStand} destaque />
+          </div>
+        </Reveal>
 
-          <Reveal atraso={100}>
-            <div className="h-full rounded-2xl border border-tinta-200 bg-fundo p-6">
-              <p className="text-[0.6875rem] font-semibold tracking-[0.12em] text-ouro-700 uppercase">
-                O que tem em volta
-              </p>
-              <ul className="mt-5 grid gap-px overflow-hidden rounded-xl bg-tinta-200">
-                {localizacao.proximidades.map((item) => (
-                  <li
-                    key={item.nome}
-                    className="flex items-baseline justify-between gap-4 bg-superficie px-4 py-3.5"
-                  >
-                    <span className="font-titulo text-[0.9375rem] font-bold text-azul-900">
-                      {item.nome}
-                    </span>
-                    <span className="shrink-0 text-right text-[0.8125rem] text-tinta-600">
-                      {item.detalhe}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
+        {/* Pontos de interesse, agrupados por tipo */}
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+          {localizacao.pontosDeInteresse.map((grupo, indice) => (
+            <Reveal key={grupo.grupo} atraso={100 + indice * 60}>
+              <div className="h-full rounded-2xl border border-tinta-200 bg-fundo p-4 sm:p-5">
+                <p className="flex items-center gap-2 text-[0.6875rem] font-semibold tracking-[0.12em] text-ouro-700 uppercase">
+                  <span aria-hidden="true" className="h-px w-4 bg-ouro-500" />
+                  {grupo.grupo}
+                </p>
+                <ul className="mt-3.5 grid gap-3">
+                  {grupo.itens.map((item) => (
+                    <li key={item.nome}>
+                      <p className="font-titulo text-[0.9375rem] leading-snug font-bold text-azul-900">
+                        {item.nome}
+                      </p>
+                      <p className="mt-0.5 text-[0.8125rem] leading-snug text-tinta-600">
+                        {item.detalhe}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
         </div>
 
-        <Reveal atraso={140} className="mt-9 text-center">
+        <Reveal atraso={160} className="mt-6">
+          <p className="text-center text-xs text-tinta-500">
+            {localizacao.avisoPontos}
+          </p>
+        </Reveal>
+
+        <Reveal atraso={200} className="mt-9 text-center">
           <CtaWhatsApp origem="localizacao">Quero agendar uma visita</CtaWhatsApp>
         </Reveal>
       </div>

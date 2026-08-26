@@ -3,7 +3,7 @@ import { Reveal } from "./ui/Reveal";
 import { CtaWhatsApp } from "./ui/CtaWhatsApp";
 import { CtaFormulario } from "./ui/CtaFormulario";
 import { Galeria } from "./ui/Galeria";
-import { IconeLocal } from "./ui/Icones";
+import { IconeCheck, IconeLocal } from "./ui/Icones";
 import { empreendimento } from "@/lib/site";
 
 export function Empreendimento() {
@@ -46,7 +46,28 @@ export function Empreendimento() {
           </dl>
         </Reveal>
 
-        <Reveal atraso={160} className="mt-10">
+        {/* Incorporacao registrada e seguranca juridica de verdade para quem
+            compra na planta — merece aparecer, nao ficar so na letra miuda. */}
+        <Reveal atraso={140} className="mt-6">
+          <div className="mx-auto flex max-w-3xl flex-col items-start gap-3 rounded-2xl border border-verde-500/35 bg-verde-50 px-5 py-4 sm:flex-row sm:items-center">
+            <span
+              aria-hidden="true"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-verde-600 text-white"
+            >
+              <IconeCheck className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="font-titulo text-[0.9375rem] font-bold text-verde-700">
+                {empreendimento.registro.rotulo} · {empreendimento.registro.valor}
+              </p>
+              <p className="mt-0.5 text-[0.8125rem] leading-snug text-tinta-600">
+                {empreendimento.registro.detalhe}
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal atraso={180} className="mt-10">
           <Galeria
             itens={empreendimento.galeria}
             modo="carrossel"

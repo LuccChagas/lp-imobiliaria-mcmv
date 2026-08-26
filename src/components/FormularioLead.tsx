@@ -341,10 +341,26 @@ export function FormularioLead() {
   );
 }
 
-export function SecaoFormulario() {
+export function SecaoFormulario({
+  id = "formulario",
+  compacto = false,
+}: {
+  id?: string;
+  /** Versao que aparece logo depois da dobra, para quem ja chega decidido. */
+  compacto?: boolean;
+} = {}) {
+  const texto = compacto ? formulario.antecipado : formulario;
+  const itens = compacto
+    ? formulario.antecipado.itens
+    : [
+        "Resposta pelo WhatsApp, direto comigo",
+        "Simulação gratuita e sem compromisso",
+        "Seus dados não vão para terceiros",
+      ];
+
   return (
     <section
-      id="formulario"
+      id={id}
       className="relative isolate overflow-hidden bg-azul-900"
     >
       <div
@@ -356,25 +372,26 @@ export function SecaoFormulario() {
         }}
       />
 
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:items-center lg:gap-16">
+      <div
+        className={cn(
+          "mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16",
+          compacto ? "py-12 sm:py-16" : "py-16 sm:py-24",
+        )}
+      >
         <Reveal>
           <p className="mb-3 flex items-center gap-2 text-[0.8125rem] font-semibold tracking-[0.14em] text-ouro-300 uppercase">
             <span aria-hidden="true" className="h-px w-6 bg-ouro-400/70" />
-            {formulario.sobretitulo}
+            {texto.sobretitulo}
           </p>
           <h2 className="font-titulo text-[clamp(1.75rem,1.15rem+2.5vw,2.75rem)] leading-[1.15] font-extrabold tracking-[-0.02em] text-white text-balance">
-            {formulario.titulo}
+            {texto.titulo}
           </h2>
           <p className="mt-4 text-[1.0625rem] leading-relaxed text-azul-100 text-pretty">
-            {formulario.descricao}
+            {texto.descricao}
           </p>
 
           <ul className="mt-7 grid gap-3">
-            {[
-              "Resposta pelo WhatsApp, direto comigo",
-              "Simulação gratuita e sem compromisso",
-              "Seus dados não vão para terceiros",
-            ].map((item) => (
+            {itens.map((item) => (
               <li key={item} className="flex items-start gap-3">
                 <span
                   aria-hidden="true"
