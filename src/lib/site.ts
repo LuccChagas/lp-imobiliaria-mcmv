@@ -565,8 +565,11 @@ export const formulario = {
     "Acima de 6 salários mínimos",
   ],
   opcoesFgts: ["Sim", "Não", "Não sei"],
-  botao: "Enviar meus dados",
-  botaoEnviando: "Enviando...",
+  /** Nomeia o que acontece depois do clique, em vez do ato de entregar
+   *  dado. "Enviar meus dados" chamava atencao para o custo, nao para o
+   *  beneficio — e e exatamente isso que trava o dedo de quem hesita. */
+  botao: "Falar com especialista",
+  botaoEnviando: "Enviando seu contato...",
   avisoLgpd:
     "Ao enviar, você concorda que a equipe da Tayná entre em contato pelo WhatsApp sobre a compra do seu imóvel. Seus dados não são vendidos nem repassados para terceiros.",
   /** Tela de sucesso: ninguem e jogado no WhatsApp, um consultor retorna. */
