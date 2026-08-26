@@ -109,7 +109,7 @@ export const hero = {
   /** Bloco de quem atende, no pe da dobra. */
   atendimento: {
     prefixo: "Atendimento comercial com o",
-    destaque: "time Tayná",
+    destaque: `time ${pessoa.nome}`,
     conquista: "+500 apartamentos vendidos",
   },
   ctaPrimario: "Quero simular agora",
