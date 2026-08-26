@@ -4,6 +4,7 @@ import { Empreendimento } from "@/components/Empreendimento";
 import { Condicoes } from "@/components/Condicoes";
 import { ProvaSocial } from "@/components/ProvaSocial";
 import { SecaoFormulario } from "@/components/FormularioLead";
+import { Fechamento } from "@/components/Fechamento";
 import { Rodape } from "@/components/Rodape";
 import { BotaoFlutuante } from "@/components/BotaoFlutuante";
 import { RastreioRolagem } from "@/components/RastreioRolagem";
@@ -72,13 +73,14 @@ export default function Pagina() {
 
       <main className="flex-1">
         <Hero />
-        {/* Formulario logo apos a dobra: quem chega de anuncio ja quer saber
-            se consegue, e nao deveria rolar a pagina inteira. */}
+        {/* Unico formulario da pagina, logo apos a dobra. Todos os CTAs
+            apontam para ele; a faixa de fechamento no fim so devolve o
+            caminho para quem leu tudo. */}
         <SecaoFormulario id="simulacao" compacto />
         <Empreendimento />
         <Condicoes />
         <ProvaSocial />
-        <SecaoFormulario />
+        <Fechamento />
       </main>
 
       <Rodape />

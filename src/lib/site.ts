@@ -432,6 +432,18 @@ export const formulario = {
 /* 13. Rodape                                                                  */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * Faixa de fechamento. Substitui a segunda instancia do formulario: quem
+ * chegou ate aqui leu a pagina inteira e esta no pico de intencao — terminar
+ * no texto legal desperdicaria essa pessoa. Custa ~300px em vez de 1.157px.
+ */
+export const fechamento = {
+  titulo: "Pronto para saber se você consegue?",
+  texto:
+    "A simulação é gratuita, leva menos de um minuto e não te compromete com nada.",
+  cta: "Fazer minha simulação",
+} as const;
+
 export const rodape = {
   descricao:
     "Atendimento a famílias que querem sair do aluguel e comprar o primeiro apartamento em São Paulo.",

@@ -198,7 +198,7 @@ Copie `.env.example` para `.env.local`. Todas opcionais — a página funciona c
 ## Estrutura da página
 
 Seis seções. A versão anterior tinha treze e o cliente devolveu com "muito mais curto e
-direto, menos poluído" — a página caiu de **19,6 para 11,9 telas de celular (−40%)** sem
+direto, menos poluído" — a página caiu de **19,6 para 10,8 telas de celular (−45%)** sem
 perder nenhum argumento de venda.
 
 1. **Hero** — render das torres, nome, **R$ 800**, a Tayná com foto e "+500 vendidos", e os selos Caixa/MCMV/FGTS na própria dobra
@@ -206,9 +206,19 @@ perder nenhum argumento de venda.
 3. **O empreendimento** — ficha, selo de incorporação registrada, galeria, lazer em etiquetas, proximidades e os dois endereços
 4. **Condições** — 4 cards de objeção + as duas faixas de renda reais
 5. **Prova social** — prints de conversa, vídeos, fotos de clientes e a faixa de credencial da Tayná
-6. **Formulário final** (`#formulario`)
+6. **Faixa de fechamento** — uma linha e um botão que devolve ao formulário
 
 Rodapé com o obrigatório: CRECI, selos e os avisos legais.
+
+### Só existe um formulário
+
+A segunda instância saiu. Ela custava 1.157px repetindo os mesmos campos, e a faixa de
+fechamento resolve o mesmo problema por 274px: quem leu a página inteira está no pico de
+intenção e não deveria terminar no texto legal.
+
+Sobra uma consequência aceita de propósito: os CTAs abaixo do formulário rolam **para cima**
+até ele. O `CtaPrincipal` já lida com isso — procura a instância mais próxima abaixo e, não
+achando nenhuma, volta para a última. Com um formulário só, todos convergem para ele.
 
 ### O que foi fundido, e por quê
 
@@ -316,18 +326,16 @@ O CTA de `condicoes` é o mais importante: a simulação precisa de renda, FGTS 
 alternativa. Como as duas origens são rastreadas separadamente, dá para comparar depois qual
 canal converte melhor e reequilibrar.
 
-### O formulário aparece duas vezes, de propósito
+### O formulário vem cedo, de propósito
 
 Com o formulário só no fim, ele ficava a cerca de 15 mil pixels do topo no celular — quase
-ninguém rola até lá. Agora existem **duas instâncias do mesmo formulário**:
+ninguém rolava até lá. Hoje ele fica logo depois da dobra:
 
 | Onde | Âncora | Para quem |
 | --- | --- | --- |
-| Logo depois da dobra e dos selos | `#simulacao` | Quem chega de anúncio já decidido e só quer saber se consegue financiar |
-| No fim, antes do rodapé | `#formulario` | Quem leu a página inteira e se convenceu no caminho |
+| Logo depois da dobra | `#simulacao` | Único formulário da página. Todos os CTAs apontam para ele. |
 
-São os mesmos campos e a mesma rota; muda só a moldura. O antecipado usa uma variante
-compacta (`<SecaoFormulario id="simulacao" compacto />`).
+Usa a variante compacta (`<SecaoFormulario id="simulacao" compacto />`).
 
 Ele não vem **antes** do produto de propósito: diferente de uma página de oferta genérica,
 aqui o visitante chega sem saber o que é o Atlântica. A dobra apresenta o empreendimento, o
