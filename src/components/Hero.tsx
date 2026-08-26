@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { Reveal } from "./ui/Reveal";
 import { IconeCheck } from "./ui/Icones";
 import { hero, pessoa, sobre } from "@/lib/site";
@@ -100,7 +100,7 @@ export function Hero() {
 
           <Reveal atraso={280}>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <CtaWhatsApp origem="hero">{hero.ctaPrimario}</CtaWhatsApp>
+              <CtaPrincipal origem="hero">{hero.ctaPrimario}</CtaPrincipal>
               <a
                 href="#empreendimento"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/8 px-6 py-4 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/16 active:bg-white/24"

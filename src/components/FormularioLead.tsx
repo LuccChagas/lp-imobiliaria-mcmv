@@ -52,8 +52,9 @@ export function FormularioLead() {
   const idBase = useId();
   const [dados, setDados] = useState<Dados>(inicial);
   const [erros, setErros] = useState<Partial<Record<keyof Dados, string>>>({});
-  const [enviado, setEnviado] = useState(false);
-  const [linkManual, setLinkManual] = useState<string | null>(null);
+  const [estado, setEstado] = useState<"parado" | "enviando" | "enviado" | "falhou">(
+    "parado",
+  );
 
   function alterar<C extends keyof Dados>(campo: C, valor: string) {
     setDados((atual) => ({ ...atual, [campo]: valor }));
@@ -70,18 +71,26 @@ export function FormularioLead() {
     return novos;
   }
 
-  function aoEnviar(evento: React.FormEvent<HTMLFormElement>) {
+  async function aoEnviar(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
     const novosErros = validar(dados);
     setErros(novosErros);
     if (Object.keys(novosErros).length > 0) return;
 
-    // 1a perna — encaminha o lead. Sem await de proposito: se o webhook cair,
-    // demorar ou falhar, o WhatsApp abre do mesmo jeito. Perder um lead por
-    // causa de um CRM fora do ar e inaceitavel.
+    setEstado("enviando");
+
+    rastrearLead("formulario", {
+      dormitorios: dados.dormitorios || undefined,
+      renda: dados.renda || undefined,
+      fgts: dados.fgts || undefined,
+    });
+
+    // Agora o formulario e a unica porta: ninguem e jogado no WhatsApp.
+    // Por isso aqui o envio e AGUARDADO — se falhar, a pessoa precisa saber,
+    // e recebe o link direto para o contato nao se perder.
     try {
-      void fetch("/api/lead", {
+      const resposta = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -90,28 +99,15 @@ export function FormularioLead() {
           // manda a URL inteira para a rota extrair as UTMs da campanha
           pagina: window.location.href,
         }),
-        keepalive: true,
-      }).catch(() => {});
+      });
+      setEstado(resposta.ok ? "enviado" : "falhou");
     } catch {
-      /* silencioso de proposito */
+      setEstado("falhou");
     }
-
-    rastrearLead("formulario", {
-      dormitorios: dados.dormitorios || undefined,
-      renda: dados.renda || undefined,
-      fgts: dados.fgts || undefined,
-    });
-
-    // 2a perna — abre o WhatsApp no mesmo gesto do usuario, sem nenhum await
-    // antes, senao o bloqueador de pop-up do celular engole a janela.
-    const url = linkWhatsApp(montarMensagem(dados));
-    const janela = window.open(url, "_blank", "noopener,noreferrer");
-    if (!janela) setLinkManual(url);
-
-    setEnviado(true);
   }
 
-  if (enviado) {
+  if (estado === "enviado") {
+    const primeiroNome = dados.nome.trim().split(" ")[0];
     return (
       <div className="rounded-2xl border border-verde-500/40 bg-superficie p-7 text-center sm:p-9">
         <span
@@ -121,35 +117,54 @@ export function FormularioLead() {
           <IconeCheck className="h-7 w-7" />
         </span>
         <h3 className="font-titulo mt-5 text-2xl font-extrabold text-azul-900">
-          Prontinho, {dados.nome.trim().split(" ")[0]}!
+          {formulario.sucesso.titulo}, {primeiroNome}!
         </h3>
         <p className="mt-3 text-[0.9375rem] leading-relaxed text-tinta-600">
-          Abri o WhatsApp com os seus dados já preenchidos. É só apertar enviar que
-          eu te respondo.
+          {formulario.sucesso.texto}
         </p>
-
-        {linkManual ? (
-          <a
-            href={linkManual}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center justify-center gap-2.5 rounded-xl bg-azul-500 px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-azul-600"
-          >
-            <IconeWhatsApp className="h-5 w-5" />
-            Não abriu? Toque aqui
-          </a>
-        ) : null}
+        <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-verde-50 px-4 py-2 text-[0.8125rem] font-medium text-verde-700">
+          <IconeWhatsApp className="h-4 w-4" />
+          {formulario.sucesso.rodape}
+        </p>
 
         <button
           type="button"
           onClick={() => {
-            setEnviado(false);
-            setLinkManual(null);
+            setEstado("parado");
             setDados(inicial);
           }}
           className="mt-5 block w-full text-sm font-medium text-tinta-600 underline underline-offset-4 hover:text-azul-700"
         >
-          Enviar outro contato
+          {formulario.sucesso.outro}
+        </button>
+      </div>
+    );
+  }
+
+  if (estado === "falhou") {
+    return (
+      <div className="rounded-2xl border border-amber-500/50 bg-superficie p-7 text-center sm:p-9">
+        <h3 className="font-titulo text-2xl font-extrabold text-azul-900">
+          {formulario.falha.titulo}
+        </h3>
+        <p className="mt-3 text-[0.9375rem] leading-relaxed text-tinta-600">
+          {formulario.falha.texto}
+        </p>
+        <a
+          href={linkWhatsApp(montarMensagem(dados))}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex items-center justify-center gap-2.5 rounded-xl bg-azul-500 px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-azul-600"
+        >
+          <IconeWhatsApp className="h-5 w-5" />
+          {formulario.falha.botao}
+        </a>
+        <button
+          type="button"
+          onClick={() => setEstado("parado")}
+          className="mt-5 block w-full text-sm font-medium text-tinta-600 underline underline-offset-4 hover:text-azul-700"
+        >
+          {formulario.falha.tentar}
         </button>
       </div>
     );
@@ -321,10 +336,10 @@ export function FormularioLead() {
 
       <button
         type="submit"
-        className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-azul-500 px-6 py-4 text-base font-semibold text-white shadow-[0_10px_24px_-10px_rgb(21_112_239_/_0.7)] transition-colors hover:bg-azul-600 active:bg-azul-700 sm:text-[1.0625rem]"
+        disabled={estado === "enviando"}
+        className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-azul-500 px-6 py-4 text-base font-semibold text-white shadow-[0_10px_24px_-10px_rgb(21_112_239_/_0.7)] transition-colors hover:bg-azul-600 active:bg-azul-700 disabled:cursor-not-allowed disabled:opacity-70 sm:text-[1.0625rem]"
       >
-        <IconeWhatsApp className="h-5 w-5 shrink-0" />
-        {formulario.botao}
+        {estado === "enviando" ? formulario.botaoEnviando : formulario.botao}
       </button>
 
       <p className="mt-4 text-center text-xs leading-relaxed text-tinta-600">
@@ -361,6 +376,7 @@ export function SecaoFormulario({
   return (
     <section
       id={id}
+      data-formulario=""
       className="relative isolate overflow-hidden bg-azul-900"
     >
       <div

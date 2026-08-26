@@ -1,7 +1,6 @@
 import { SecaoTitulo } from "./ui/SecaoTitulo";
 import { Reveal } from "./ui/Reveal";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
-import { CtaFormulario } from "./ui/CtaFormulario";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { IconeCheck } from "./ui/Icones";
 import { condicoes } from "@/lib/site";
 
@@ -80,11 +79,8 @@ export function Condicoes() {
         {/* A simulacao pede renda, FGTS e dormitorios — que sao exatamente os
             campos do formulario. Por isso aqui ele vem antes do WhatsApp. */}
         <Reveal atraso={200} className="mt-8">
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <CtaFormulario origem="condicoes">{condicoes.cta}</CtaFormulario>
-            <CtaWhatsApp origem="condicoes" className="min-h-14">
-              Prefiro falar no WhatsApp
-            </CtaWhatsApp>
+          <div className="text-center">
+            <CtaPrincipal origem="condicoes">{condicoes.cta}</CtaPrincipal>
           </div>
         </Reveal>
       </div>

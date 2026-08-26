@@ -15,19 +15,41 @@ Zero dependência além do que o `create-next-app` traz.
 
 ---
 
-## Só existem dois canais de contato
+## Todo CTA leva ao formulário. Nenhum vai direto ao WhatsApp
 
-Por decisão do cliente, a página tem **apenas WhatsApp e formulário**. Não há link de
-Instagram, de site nem de e-mail em lugar nenhum da interface — nem no rodapé.
+Decisão do cliente: **o formulário é a única porta**. Não existe um único link
+`wa.me` clicável na página — os 12 CTAs, incluindo o do cabeçalho e o botão flutuante,
+rolam até o formulário mais próximo. O contato acontece depois, quando um consultor
+retorna.
 
-O Instagram e o `apartamentofacilitado.net` continuam em `contato` no `site.ts`, mas são
-usados **só no JSON-LD** (`sameAs`), que é invisível ao visitante e serve para o Google ligar
-as entidades. Não geram nenhum caminho de clique. Se quiser tirar de lá também, é só remover
-do `sameAs` em `src/app/page.tsx`.
+Por que assim: quem ia direto para o WhatsApp não deixava rastro na planilha. Agora todo
+lead é capturado antes de virar conversa.
 
-Sobram dois links externos na página, ambos em Localização: o **Google Maps** do
-empreendimento e o do stand. Não são canal de contato, são utilidade para achar o endereço —
-mas se o cliente quiser zero saída, avise que eu troco por endereço em texto puro.
+### Como o CTA escolhe o formulário
+
+A página tem duas instâncias. O `CtaPrincipal` procura, em tempo de clique, a instância
+**mais próxima abaixo** da posição atual; se a pessoa já passou das duas, volta para a
+última. Assim o botão nunca joga o visitante para o outro extremo da página — um CTA no FAQ
+desce para o formulário final, e um na dobra desce para o antecipado.
+
+Depois de rolar, o foco vai para o campo "nome" com `preventScroll`, para leitor de tela e
+teclado acompanharem sem um segundo pulo.
+
+### O envio agora é aguardado
+
+Antes o `fetch` saía sem `await` porque o WhatsApp abria em seguida e servia de rede de
+segurança. Sem essa segunda perna, o envio virou crítico: agora ele é aguardado.
+
+- **Sucesso** → "Um consultor do time da Tayná vai te chamar no WhatsApp."
+- **Falha** → tela própria com o link direto do WhatsApp, para o contato não se perder.
+
+É o único lugar do projeto onde um link `wa.me` ainda aparece, e só quando algo deu errado.
+
+### Nenhum link para fora
+
+Sem Instagram, sem site, sem e-mail. Os perfis seguem em `contato` no `site.ts` mas são
+usados **só no JSON-LD** (`sameAs`), que é invisível ao visitante. Sobram dois links do
+Google Maps em "A região", que são utilidade para achar o stand, não canal de contato.
 
 ### Trocar o número do WhatsApp
 
@@ -99,6 +121,10 @@ das áreas internas. Duas consequências:
 - A **seção de lazer** mostra só as 3 fotos que existem de verdade (todas de piscina/deck) e
   lista os 8 diferenciais oficiais como etiqueta. Usar render de outro condomínio da Cury
   para preencher seria propaganda enganosa.
+
+  Os renders publicados têm apenas **565px de largura**. Por isso os cards são pequenos —
+  três por linha no desktop, dois no celular, nenhum passando de ~355px na tela. Numa
+  coluna só a imagem era esticada para mais de 1.100px e ficava visivelmente serrilhada.
 
 Se ela conseguir o material com a construtora, dá para reativar as duas coisas.
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import {
   contato,
   empreendimento,
@@ -72,19 +72,13 @@ export function Rodape() {
             </p>
             {/* So dois canais, por decisao do cliente. */}
             <p className="mt-4 max-w-xs text-[0.9375rem] leading-relaxed text-azul-200">
-              O atendimento acontece pelo WhatsApp ou pelo formulário desta
-              página. É por ali que eu respondo.
+              Preencha o formulário desta página e um consultor do time entra em
+              contato pelo WhatsApp. É o nosso único canal de atendimento.
             </p>
             <div className="mt-5 flex flex-col gap-3">
-              <CtaWhatsApp origem="rodape" tamanho="medio" variante="ouro">
-                Falar no WhatsApp
-              </CtaWhatsApp>
-              <a
-                href="#formulario"
-                className="inline-flex items-center justify-center rounded-xl border border-white/25 px-5 py-3 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                Deixar meus dados
-              </a>
+              <CtaPrincipal origem="rodape" tamanho="medio" variante="ouro">
+                Fazer minha simulação
+              </CtaPrincipal>
             </div>
           </div>
         </div>

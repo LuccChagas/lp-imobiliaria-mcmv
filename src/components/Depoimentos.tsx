@@ -1,7 +1,7 @@
 import { SecaoTitulo } from "./ui/SecaoTitulo";
 import { Reveal } from "./ui/Reveal";
 import { Galeria } from "./ui/Galeria";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { depoimentos } from "@/lib/site";
 
 /**
@@ -45,9 +45,9 @@ export function Depoimentos() {
         </Reveal>
 
         <Reveal atraso={140} className="mt-8 text-center">
-          <CtaWhatsApp origem="depoimentos" variante="ouro">
-            Quero essa conversa também
-          </CtaWhatsApp>
+          <CtaPrincipal origem="depoimentos" variante="ouro">
+            Quero fazer minha simulação
+          </CtaPrincipal>
         </Reveal>
       </div>
     </section>

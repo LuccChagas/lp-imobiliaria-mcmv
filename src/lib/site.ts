@@ -106,7 +106,7 @@ export const hero = {
     "1 e 2 dormitórios com opção de suíte",
     "Terraço, vaga e lazer completo",
   ],
-  ctaPrimario: "Quero simular pelo WhatsApp",
+  ctaPrimario: "Quero simular agora",
   ctaSecundario: "Ver o empreendimento",
   imagem: {
     src: "/empreendimento/fachada.jpg",
@@ -372,7 +372,7 @@ export const sobre = {
     "Especialista em financiamento Caixa e MCMV",
     "Atendimento em toda a Grande São Paulo",
   ],
-  cta: "Falar direto comigo",
+  cta: "Quero falar com a Tayná",
   fotoCaminhando: {
     src: "/tayna/caminhando.jpg",
     largura: 1000,
@@ -557,9 +557,26 @@ export const formulario = {
     "Acima de 6 salários mínimos",
   ],
   opcoesFgts: ["Sim", "Não", "Não sei"],
-  botao: "Enviar e falar no WhatsApp",
+  botao: "Enviar meus dados",
+  botaoEnviando: "Enviando...",
   avisoLgpd:
-    "Ao enviar, você concorda que a Tayná entre em contato pelo WhatsApp sobre a compra do seu imóvel. Seus dados não são vendidos nem repassados para terceiros.",
+    "Ao enviar, você concorda que a equipe da Tayná entre em contato pelo WhatsApp sobre a compra do seu imóvel. Seus dados não são vendidos nem repassados para terceiros.",
+  /** Tela de sucesso: ninguem e jogado no WhatsApp, um consultor retorna. */
+  sucesso: {
+    titulo: "Recebi seus dados",
+    texto:
+      "Um consultor do time da Tayná vai te chamar no WhatsApp para fazer a sua simulação. Fique de olho no celular.",
+    rodape: "Costuma ser rápido — normalmente no mesmo dia.",
+    outro: "Enviar outro contato",
+  },
+  /** So aparece se o envio falhar, para o lead nao se perder. */
+  falha: {
+    titulo: "Não consegui enviar",
+    texto:
+      "Deu um problema aqui do nosso lado. Para não perder seu contato, fale direto no WhatsApp:",
+    botao: "Falar no WhatsApp",
+    tentar: "Tentar enviar de novo",
+  },
   erroNome: "Me diz seu nome, por favor.",
   erroWhatsapp: "Preciso de um WhatsApp com DDD para te retornar.",
 } as const;

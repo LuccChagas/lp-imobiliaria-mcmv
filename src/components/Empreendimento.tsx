@@ -1,7 +1,6 @@
 import { SecaoTitulo } from "./ui/SecaoTitulo";
 import { Reveal } from "./ui/Reveal";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
-import { CtaFormulario } from "./ui/CtaFormulario";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { Galeria } from "./ui/Galeria";
 import { IconeCheck, IconeLocal } from "./ui/Icones";
 import { empreendimento } from "@/lib/site";
@@ -85,13 +84,10 @@ export function Empreendimento() {
         </Reveal>
 
         <Reveal atraso={240} className="mt-9">
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <CtaFormulario origem="empreendimento">
+          <div className="text-center">
+            <CtaPrincipal origem="empreendimento">
               Quero receber os valores
-            </CtaFormulario>
-            <CtaWhatsApp origem="empreendimento" className="min-h-14">
-              Prefiro falar no WhatsApp
-            </CtaWhatsApp>
+            </CtaPrincipal>
           </div>
         </Reveal>
       </div>

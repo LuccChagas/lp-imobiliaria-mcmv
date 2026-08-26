@@ -1,6 +1,6 @@
 import { SecaoTitulo } from "./ui/SecaoTitulo";
 import { Reveal } from "./ui/Reveal";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { faq } from "@/lib/site";
 
 /** <details>/<summary>: acessivel e sem uma linha de JavaScript. */
@@ -44,9 +44,9 @@ export function Faq() {
           <p className="text-[0.9375rem] text-tinta-600">
             Ficou com outra dúvida?
           </p>
-          <CtaWhatsApp origem="faq" className="mt-4">
-            Perguntar no WhatsApp
-          </CtaWhatsApp>
+          <CtaPrincipal origem="faq" className="mt-4">
+            Perguntar para a Tayná
+          </CtaPrincipal>
         </Reveal>
       </div>
     </section>

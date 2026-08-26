@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Reveal } from "./ui/Reveal";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
-import { CtaFormulario } from "./ui/CtaFormulario";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { IconeCheck } from "./ui/Icones";
 import { contato, sobre } from "@/lib/site";
 
@@ -102,19 +101,13 @@ export function Sobre() {
             {/* Apenas dois caminhos daqui: WhatsApp ou formulario.
                 Nenhum link que tire a pessoa da pagina. */}
             <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row lg:flex-col xl:flex-row">
-              <CtaWhatsApp
+              <CtaPrincipal
                 origem="sobre"
                 className="min-h-[3.625rem] w-full whitespace-nowrap sm:w-auto lg:w-full xl:w-auto"
               >
                 {sobre.cta}
-              </CtaWhatsApp>
-              <CtaFormulario
-                origem="sobre"
-                className="min-h-[3.625rem] w-full whitespace-nowrap sm:w-auto lg:w-full xl:w-auto"
-                variante="contorno"
-              >
-                Deixar meus dados
-              </CtaFormulario>
+              </CtaPrincipal>
+
             </div>
           </Reveal>
         </div>

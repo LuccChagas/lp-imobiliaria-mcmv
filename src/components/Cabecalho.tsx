@@ -1,4 +1,4 @@
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { navegacao, pessoa } from "@/lib/site";
 
 export function Cabecalho() {
@@ -34,10 +34,10 @@ export function Cabecalho() {
           </ul>
         </nav>
 
-        <CtaWhatsApp origem="cabecalho" tamanho="medio" className="shrink-0">
-          <span className="hidden sm:inline">Falar agora</span>
-          <span className="sm:hidden">WhatsApp</span>
-        </CtaWhatsApp>
+        <CtaPrincipal origem="cabecalho" tamanho="medio" className="shrink-0">
+          <span className="hidden sm:inline">Simular agora</span>
+          <span className="sm:hidden">Simular</span>
+        </CtaPrincipal>
       </div>
     </header>
   );

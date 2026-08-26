@@ -1,7 +1,7 @@
 import { SecaoTitulo } from "./ui/SecaoTitulo";
 import { Reveal } from "./ui/Reveal";
 import { Galeria } from "./ui/Galeria";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { IconeCheck } from "./ui/Icones";
 import { lazer } from "@/lib/site";
 
@@ -36,11 +36,15 @@ export function Lazer() {
         />
 
         <Reveal atraso={100} className="mt-12">
+          {/* Cartoes pequenos de proposito: os renders publicados tem so
+              565px de largura e esticavam feio quando ocupavam a coluna
+              inteira. Em 3 colunas nenhum passa de ~355px na tela. */}
           <Galeria
             itens={itens}
-            proporcao="aspect-square"
+            className="grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4"
+            proporcao="aspect-[4/3]"
             comLegenda
-            sizes="(min-width: 1024px) 25vw, 50vw"
+            sizes="(min-width: 640px) 33vw, 50vw"
           />
         </Reveal>
 
@@ -60,9 +64,9 @@ export function Lazer() {
         </Reveal>
 
         <Reveal atraso={180} className="mt-10 text-center">
-          <CtaWhatsApp origem="lazer" variante="ouro">
+          <CtaPrincipal origem="lazer" variante="ouro">
             Quero conhecer o condomínio
-          </CtaWhatsApp>
+          </CtaPrincipal>
         </Reveal>
       </div>
     </section>

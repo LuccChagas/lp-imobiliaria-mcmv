@@ -1,6 +1,6 @@
 import { SecaoTitulo } from "./ui/SecaoTitulo";
 import { Reveal } from "./ui/Reveal";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { IconeLocal, IconeSeta } from "./ui/Icones";
 import { localizacao } from "@/lib/site";
 
@@ -98,7 +98,7 @@ export function Localizacao() {
         </Reveal>
 
         <Reveal atraso={200} className="mt-9 text-center">
-          <CtaWhatsApp origem="localizacao">Quero agendar uma visita</CtaWhatsApp>
+          <CtaPrincipal origem="localizacao">Quero agendar uma visita</CtaPrincipal>
         </Reveal>
       </div>
     </section>

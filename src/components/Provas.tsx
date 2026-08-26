@@ -1,7 +1,7 @@
 import { SecaoTitulo } from "./ui/SecaoTitulo";
 import { Reveal } from "./ui/Reveal";
 import { Galeria } from "./ui/Galeria";
-import { CtaWhatsApp } from "./ui/CtaWhatsApp";
+import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { VideoDepoimento } from "./ui/VideoDepoimento";
 import { provas } from "@/lib/site";
 
@@ -54,7 +54,7 @@ export function Provas() {
         </Reveal>
 
         <Reveal atraso={160} className="mt-10 text-center">
-          <CtaWhatsApp origem="provas">Quero ser o próximo</CtaWhatsApp>
+          <CtaPrincipal origem="provas">Quero ser o próximo</CtaPrincipal>
         </Reveal>
       </div>
     </section>
