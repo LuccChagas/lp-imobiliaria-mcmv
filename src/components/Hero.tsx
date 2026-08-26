@@ -122,13 +122,15 @@ export function Hero() {
                 className="h-22 w-22 shrink-0 rounded-2xl border-2 border-ouro-500/70 object-cover object-[center_22%] shadow-[0_14px_32px_-14px_rgb(6_25_49_/_0.85)] sm:h-28 sm:w-28"
               />
               <p className="text-[0.9375rem] leading-snug text-azul-100">
-                Atendimento direto com{" "}
-                <span className="font-semibold text-white">{pessoa.nome}</span>
+                {hero.atendimento.prefixo}{" "}
+                <span className="font-semibold text-white">
+                  {hero.atendimento.destaque}
+                </span>
                 <br />
                 <span className="text-azul-200">{pessoa.credencial}</span>
                 <br />
                 <span className="mt-1.5 inline-block font-semibold text-ouro-300">
-                  +500 apartamentos vendidos
+                  {hero.atendimento.conquista}
                 </span>
               </p>
             </div>

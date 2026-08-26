@@ -106,6 +106,12 @@ export const hero = {
     "1 e 2 dormitórios com opção de suíte",
     "Terraço, vaga e lazer completo",
   ],
+  /** Bloco de quem atende, no pe da dobra. */
+  atendimento: {
+    prefixo: "Atendimento comercial com o",
+    destaque: "time Tayná",
+    conquista: "+500 apartamentos vendidos",
+  },
   ctaPrimario: "Quero simular agora",
   ctaSecundario: "Ver o empreendimento",
   imagem: {
