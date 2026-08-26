@@ -35,15 +35,28 @@ desce para o formulário final, e um na dobra desce para o antecipado.
 Depois de rolar, o foco vai para o campo "nome" com `preventScroll`, para leitor de tela e
 teclado acompanharem sem um segundo pulo.
 
-### O envio agora é aguardado
+### O envio: planilha e WhatsApp, nessa ordem
 
-Antes o `fetch` saía sem `await` porque o WhatsApp abria em seguida e servia de rede de
-segurança. Sem essa segunda perna, o envio virou crítico: agora ele é aguardado.
+Ao enviar, o lead vai para a planilha **e** o WhatsApp abre com a mensagem montada. Nenhum
+contato acontece sem passar pelo registro — era esse o ponto de mandar todos os CTAs para o
+formulário.
 
-- **Sucesso** → "Um consultor do time da Tayná vai te chamar no WhatsApp."
-- **Falha** → tela própria com o link direto do WhatsApp, para o contato não se perder.
+O `fetch` sai **sem `await`**, com `keepalive: true`. Não é descuido: travar ali faria o
+navegador tratar a abertura do WhatsApp como pop-up e bloquear, porque o `window.open`
+precisa acontecer no mesmo gesto do toque. O `keepalive` mantém a requisição viva mesmo com
+a aba mudando. Se o pop-up for bloqueado mesmo assim, a tela de sucesso mostra o link
+manual.
 
-É o único lugar do projeto onde um link `wa.me` ainda aparece, e só quando algo deu errado.
+### Todos os campos são obrigatórios
+
+Por decisão do cliente, os cinco campos são exigidos: nome, WhatsApp, dormitórios, renda e
+FGTS. Vale saber do trade-off — cada campo a mais derruba a taxa de preenchimento — mas o
+lead que chega é bem mais qualificado.
+
+- **Dormitórios**: select de 1 a 4. Não dá para digitar.
+- **Renda**: aceita **apenas dígitos**, formatados como moeda enquanto se digita. Colar
+  texto não passa: `"abc350000xyz"` vira `R$ 3.500,00`.
+- **WhatsApp**: máscara BR, valida 10 ou 11 dígitos.
 
 ### Nenhum link para fora
 

@@ -503,7 +503,7 @@ export const faq = {
     {
       pergunta: "Qual renda eu preciso ter?",
       resposta:
-        "O empreendimento tem unidades para três faixas: até 3 salários mínimos, de 3 a 6 salários mínimos, e unidades sem limite de renda. Ou seja: tem opção para uma faixa bem ampla. Me diga sua renda familiar e eu te digo qual unidade se encaixa.",
+        "Este empreendimento tem 1.336 unidades para famílias de 3 a 6 salários mínimos e 296 unidades sem limite de renda. Se a sua renda estiver abaixo disso, me chama mesmo assim: eu vejo o que temos em outros empreendimentos que se encaixem no seu caso.",
     },
     {
       pergunta: "O apartamento já está pronto?",
@@ -532,12 +532,16 @@ export const formulario = {
    * A pagina tem DUAS instancias do mesmo formulario: uma logo apos a dobra
    * (#simulacao) para quem ja chega decidido, e a completa no fim
    * (#formulario). Sao os mesmos campos; muda so a moldura.
+   *
+   * FLUXO: nenhum botao da pagina abre o WhatsApp direto — todos levam aqui.
+   * Ao enviar, o lead vai para a planilha E o WhatsApp abre com a mensagem
+   * montada. Assim nenhum contato acontece sem passar pelo registro.
    */
   antecipado: {
     sobretitulo: "Análise gratuita",
     titulo: "Descubra agora se você consegue financiar",
     descricao:
-      "Dois campos e eu já te digo o que dá para fazer no seu caso. Sem custo e sem compromisso.",
+      "Preencha os campos abaixo e fale com um especialista. Sem custo e sem compromisso.",
     itens: [
       "Parcelas que cabem no seu bolso",
       "Use o FGTS como entrada",
@@ -549,47 +553,37 @@ export const formulario = {
   sobretitulo: "Simulação sem compromisso",
   titulo: "Me manda seus dados que eu te chamo",
   descricao:
-    "São dois campos obrigatórios. O resto é só para eu já chegar na conversa com a unidade certa para você.",
+    "Todos os campos ajudam a chegar na conversa já com a unidade certa para você. Leva menos de um minuto.",
   campos: {
     nome: { rotulo: "Seu nome", placeholder: "Como você quer ser chamado" },
     whatsapp: { rotulo: "WhatsApp", placeholder: "(11) 90000-0000" },
-    dormitorios: { rotulo: "Quantos dormitórios?", placeholder: "Tanto faz, quero ver as opções" },
-    renda: { rotulo: "Renda familiar aproximada", placeholder: "Prefiro não informar agora" },
+    dormitorios: { rotulo: "Quantos dormitórios?", placeholder: "Escolha" },
+    renda: { rotulo: "Renda familiar", placeholder: "R$ 0,00" },
     fgts: { rotulo: "Você tem saldo de FGTS?" },
   },
-  opcoesDormitorios: ["1 dormitório", "2 dormitórios", "2 dormitórios com suíte"],
-  /** Faixas do proprio registro do empreendimento (HIS-1, HIS-2 e R2V). */
-  faixasRenda: [
-    "Até 3 salários mínimos",
-    "De 3 a 6 salários mínimos",
-    "Acima de 6 salários mínimos",
-  ],
+  /** So numeros — o campo e um select, entao nao ha como digitar texto. */
+  opcoesDormitorios: ["1", "2", "3", "4"],
   opcoesFgts: ["Sim", "Não", "Não sei"],
-  /** Nomeia o que acontece depois do clique, em vez do ato de entregar
-   *  dado. "Enviar meus dados" chamava atencao para o custo, nao para o
-   *  beneficio — e e exatamente isso que trava o dedo de quem hesita. */
   botao: "Falar com especialista",
-  botaoEnviando: "Enviando seu contato...",
+  botaoEnviando: "Abrindo o WhatsApp...",
   avisoLgpd:
     "Ao enviar, você concorda que a equipe da Tayná entre em contato pelo WhatsApp sobre a compra do seu imóvel. Seus dados não são vendidos nem repassados para terceiros.",
-  /** Tela de sucesso: ninguem e jogado no WhatsApp, um consultor retorna. */
+  /** Todos os campos sao obrigatorios, por decisao do cliente. */
+  erros: {
+    nome: "Me diz seu nome, por favor.",
+    whatsapp: "Preciso de um WhatsApp com DDD para te retornar.",
+    dormitorios: "Escolha quantos dormitórios você procura.",
+    renda: "Informe a renda familiar aproximada.",
+    fgts: "Responda se você tem saldo de FGTS.",
+  },
   sucesso: {
-    titulo: "Recebi seus dados",
+    titulo: "Prontinho",
     texto:
-      "Um consultor do time da Tayná vai te chamar no WhatsApp para fazer a sua simulação. Fique de olho no celular.",
+      "Abri o WhatsApp com os seus dados já preenchidos. É só apertar enviar que um consultor do time da Tayná te responde.",
     rodape: "Costuma ser rápido — normalmente no mesmo dia.",
     outro: "Enviar outro contato",
+    naoAbriu: "Não abriu? Toque aqui",
   },
-  /** So aparece se o envio falhar, para o lead nao se perder. */
-  falha: {
-    titulo: "Não consegui enviar",
-    texto:
-      "Deu um problema aqui do nosso lado. Para não perder seu contato, fale direto no WhatsApp:",
-    botao: "Falar no WhatsApp",
-    tentar: "Tentar enviar de novo",
-  },
-  erroNome: "Me diz seu nome, por favor.",
-  erroWhatsapp: "Preciso de um WhatsApp com DDD para te retornar.",
 } as const;
 
 /* -------------------------------------------------------------------------- */

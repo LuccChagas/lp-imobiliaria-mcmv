@@ -6,7 +6,13 @@ import { Reveal } from "./ui/Reveal";
 import { IconeWhatsApp } from "./ui/IconeWhatsApp";
 import { IconeCheck } from "./ui/Icones";
 import { cn } from "@/lib/cn";
-import { empreendimento, formulario, linkWhatsApp, pessoa, rodape } from "@/lib/site";
+import {
+  empreendimento,
+  formulario,
+  linkWhatsApp,
+  pessoa,
+  rodape,
+} from "@/lib/site";
 import { rastrearLead } from "@/lib/track";
 
 /** Mascara BR progressiva: (11) 91234-5678 e (11) 1234-5678. */
@@ -21,6 +27,16 @@ function mascararTelefone(valor: string) {
   return `(${digitos.slice(0, 2)}) ${digitos.slice(2, 7)}-${digitos.slice(7)}`;
 }
 
+/** So digitos entram; o resto e formatacao. Nao ha como digitar letra aqui. */
+function mascararMoeda(valor: string) {
+  const digitos = valor.replace(/\D/g, "").slice(0, 9);
+  if (!digitos) return "";
+  return (Number(digitos) / 100).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}
+
 type Dados = {
   nome: string;
   whatsapp: string;
@@ -29,68 +45,92 @@ type Dados = {
   fgts: string;
 };
 
-const inicial: Dados = { nome: "", whatsapp: "", dormitorios: "", renda: "", fgts: "" };
+const inicial: Dados = {
+  nome: "",
+  whatsapp: "",
+  dormitorios: "",
+  renda: "",
+  fgts: "",
+};
 
 function montarMensagem(dados: Dados) {
-  const linhas = [
+  return [
     `Oi ${pessoa.primeiroNome}! Vim pelo site do ${empreendimento.nome} e quero fazer a simulação.`,
     "",
     `Nome: ${dados.nome}`,
     `WhatsApp: ${dados.whatsapp}`,
-  ];
-  if (dados.dormitorios) linhas.push(`Dormitórios: ${dados.dormitorios}`);
-  if (dados.renda) linhas.push(`Renda familiar aproximada: ${dados.renda}`);
-  if (dados.fgts) linhas.push(`Tem FGTS: ${dados.fgts}`);
-  return linhas.join("\n");
+    `Dormitórios: ${dados.dormitorios}`,
+    `Renda familiar: ${dados.renda}`,
+    `Tem FGTS: ${dados.fgts}`,
+  ].join("\n");
 }
 
 const classeCampo =
   "w-full rounded-xl border bg-superficie px-4 py-3.5 text-base text-tinta-900 " +
   "placeholder:text-tinta-500 transition-colors focus:outline-none";
 
+function MensagemErro({ id, mensagem }: { id: string; mensagem?: string }) {
+  if (!mensagem) return null;
+  return (
+    <p id={id} className="mt-1.5 text-sm text-red-600">
+      {mensagem}
+    </p>
+  );
+}
+
+function classeBorda(temErro: boolean) {
+  return temErro
+    ? "border-red-500 focus:border-red-600"
+    : "border-tinta-300 focus:border-azul-500";
+}
+
 export function FormularioLead() {
   const idBase = useId();
   const [dados, setDados] = useState<Dados>(inicial);
   const [erros, setErros] = useState<Partial<Record<keyof Dados, string>>>({});
-  const [estado, setEstado] = useState<"parado" | "enviando" | "enviado" | "falhou">(
-    "parado",
-  );
+  const [enviado, setEnviado] = useState(false);
+  const [linkManual, setLinkManual] = useState<string | null>(null);
 
   function alterar<C extends keyof Dados>(campo: C, valor: string) {
     setDados((atual) => ({ ...atual, [campo]: valor }));
     if (erros[campo]) setErros((atual) => ({ ...atual, [campo]: undefined }));
   }
 
+  /** Todos os campos sao obrigatorios, por decisao do cliente. */
   function validar(valores: Dados) {
     const novos: Partial<Record<keyof Dados, string>> = {};
-    if (valores.nome.trim().length < 2) novos.nome = formulario.erroNome;
+    if (valores.nome.trim().length < 2) novos.nome = formulario.erros.nome;
+
     const digitos = valores.whatsapp.replace(/\D/g, "");
     if (digitos.length < 10 || digitos.length > 11) {
-      novos.whatsapp = formulario.erroWhatsapp;
+      novos.whatsapp = formulario.erros.whatsapp;
     }
+    if (!valores.dormitorios) novos.dormitorios = formulario.erros.dormitorios;
+    if (Number(valores.renda.replace(/\D/g, "")) <= 0) {
+      novos.renda = formulario.erros.renda;
+    }
+    if (!valores.fgts) novos.fgts = formulario.erros.fgts;
     return novos;
   }
 
-  async function aoEnviar(evento: React.FormEvent<HTMLFormElement>) {
+  function aoEnviar(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
 
     const novosErros = validar(dados);
     setErros(novosErros);
-    if (Object.keys(novosErros).length > 0) return;
+    if (Object.keys(novosErros).length > 0) {
+      const primeiro = Object.keys(novosErros)[0];
+      document
+        .getElementById(`${idBase}-${primeiro}`)
+        ?.focus({ preventScroll: false });
+      return;
+    }
 
-    setEstado("enviando");
-
-    rastrearLead("formulario", {
-      dormitorios: dados.dormitorios || undefined,
-      renda: dados.renda || undefined,
-      fgts: dados.fgts || undefined,
-    });
-
-    // Agora o formulario e a unica porta: ninguem e jogado no WhatsApp.
-    // Por isso aqui o envio e AGUARDADO — se falhar, a pessoa precisa saber,
-    // e recebe o link direto para o contato nao se perder.
+    // 1a perna — registra o lead. Sem await de proposito: `keepalive` mantem a
+    // requisicao viva mesmo com a aba mudando, e travar aqui faria o navegador
+    // tratar a abertura do WhatsApp como pop-up e bloquear.
     try {
-      const resposta = await fetch("/api/lead", {
+      void fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -99,15 +139,27 @@ export function FormularioLead() {
           // manda a URL inteira para a rota extrair as UTMs da campanha
           pagina: window.location.href,
         }),
-      });
-      setEstado(resposta.ok ? "enviado" : "falhou");
+        keepalive: true,
+      }).catch(() => {});
     } catch {
-      setEstado("falhou");
+      /* silencioso de proposito */
     }
+
+    rastrearLead("formulario", {
+      dormitorios: dados.dormitorios || undefined,
+      renda: dados.renda || undefined,
+      fgts: dados.fgts || undefined,
+    });
+
+    // 2a perna — WhatsApp no mesmo gesto do toque, sem nenhum await antes.
+    const url = linkWhatsApp(montarMensagem(dados));
+    const janela = window.open(url, "_blank", "noopener,noreferrer");
+    if (!janela) setLinkManual(url);
+
+    setEnviado(true);
   }
 
-  if (estado === "enviado") {
-    const primeiroNome = dados.nome.trim().split(" ")[0];
+  if (enviado) {
     return (
       <div className="rounded-2xl border border-verde-500/40 bg-superficie p-7 text-center sm:p-9">
         <span
@@ -117,54 +169,39 @@ export function FormularioLead() {
           <IconeCheck className="h-7 w-7" />
         </span>
         <h3 className="font-titulo mt-5 text-2xl font-extrabold text-azul-900">
-          {formulario.sucesso.titulo}, {primeiroNome}!
+          {formulario.sucesso.titulo}, {dados.nome.trim().split(" ")[0]}!
         </h3>
         <p className="mt-3 text-[0.9375rem] leading-relaxed text-tinta-600">
           {formulario.sucesso.texto}
         </p>
-        <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-verde-50 px-4 py-2 text-[0.8125rem] font-medium text-verde-700">
-          <IconeWhatsApp className="h-4 w-4" />
-          {formulario.sucesso.rodape}
-        </p>
+
+        {linkManual ? (
+          <a
+            href={linkManual}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center justify-center gap-2.5 rounded-xl bg-azul-500 px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-azul-600"
+          >
+            <IconeWhatsApp className="h-5 w-5" />
+            {formulario.sucesso.naoAbriu}
+          </a>
+        ) : (
+          <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-verde-50 px-4 py-2 text-[0.8125rem] font-medium text-verde-700">
+            <IconeWhatsApp className="h-4 w-4" />
+            {formulario.sucesso.rodape}
+          </p>
+        )}
 
         <button
           type="button"
           onClick={() => {
-            setEstado("parado");
+            setEnviado(false);
+            setLinkManual(null);
             setDados(inicial);
           }}
           className="mt-5 block w-full text-sm font-medium text-tinta-600 underline underline-offset-4 hover:text-azul-700"
         >
           {formulario.sucesso.outro}
-        </button>
-      </div>
-    );
-  }
-
-  if (estado === "falhou") {
-    return (
-      <div className="rounded-2xl border border-amber-500/50 bg-superficie p-7 text-center sm:p-9">
-        <h3 className="font-titulo text-2xl font-extrabold text-azul-900">
-          {formulario.falha.titulo}
-        </h3>
-        <p className="mt-3 text-[0.9375rem] leading-relaxed text-tinta-600">
-          {formulario.falha.texto}
-        </p>
-        <a
-          href={linkWhatsApp(montarMensagem(dados))}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center justify-center gap-2.5 rounded-xl bg-azul-500 px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-azul-600"
-        >
-          <IconeWhatsApp className="h-5 w-5" />
-          {formulario.falha.botao}
-        </a>
-        <button
-          type="button"
-          onClick={() => setEstado("parado")}
-          className="mt-5 block w-full text-sm font-medium text-tinta-600 underline underline-offset-4 hover:text-azul-700"
-        >
-          {formulario.falha.tentar}
         </button>
       </div>
     );
@@ -177,7 +214,6 @@ export function FormularioLead() {
       className="rounded-2xl border border-tinta-200 bg-superficie p-5 shadow-[0_20px_50px_-30px_rgb(6_25_49_/_0.6)] sm:p-7"
     >
       <div className="grid gap-4">
-        {/* Nome */}
         <div>
           <label
             htmlFor={`${idBase}-nome`}
@@ -197,21 +233,14 @@ export function FormularioLead() {
             onChange={(evento) => alterar("nome", evento.target.value)}
             aria-invalid={Boolean(erros.nome)}
             aria-describedby={erros.nome ? `${idBase}-nome-erro` : undefined}
-            className={cn(
-              classeCampo,
-              erros.nome
-                ? "border-red-500 focus:border-red-600"
-                : "border-tinta-300 focus:border-azul-500",
-            )}
+            className={cn(classeCampo, classeBorda(Boolean(erros.nome)))}
           />
-          {erros.nome ? (
-            <p id={`${idBase}-nome-erro`} className="mt-1.5 text-sm text-red-600">
-              {erros.nome}
-            </p>
-          ) : null}
+          <MensagemErro
+            id={`${idBase}-nome-erro`}
+            mensagem={erros.nome}
+          />
         </div>
 
-        {/* WhatsApp */}
         <div>
           <label
             htmlFor={`${idBase}-whatsapp`}
@@ -233,82 +262,97 @@ export function FormularioLead() {
               alterar("whatsapp", mascararTelefone(evento.target.value))
             }
             aria-invalid={Boolean(erros.whatsapp)}
-            aria-describedby={erros.whatsapp ? `${idBase}-whatsapp-erro` : undefined}
+            aria-describedby={
+              erros.whatsapp ? `${idBase}-whatsapp-erro` : undefined
+            }
             className={cn(
               "numerico",
               classeCampo,
-              erros.whatsapp
-                ? "border-red-500 focus:border-red-600"
-                : "border-tinta-300 focus:border-azul-500",
+              classeBorda(Boolean(erros.whatsapp)),
             )}
           />
-          {erros.whatsapp ? (
-            <p id={`${idBase}-whatsapp-erro`} className="mt-1.5 text-sm text-red-600">
-              {erros.whatsapp}
-            </p>
-          ) : null}
+          <MensagemErro
+            id={`${idBase}-whatsapp-erro`}
+            mensagem={erros.whatsapp}
+          />
         </div>
 
-        {/* Dormitorios */}
-        <div>
-          <label
-            htmlFor={`${idBase}-dormitorios`}
-            className="mb-1.5 block text-sm font-semibold text-tinta-700"
-          >
-            {formulario.campos.dormitorios.rotulo}
-          </label>
-          <select
-            id={`${idBase}-dormitorios`}
-            name="dormitorios"
-            value={dados.dormitorios}
-            onChange={(evento) => alterar("dormitorios", evento.target.value)}
-            className={cn(
-              classeCampo,
-              "appearance-none border-tinta-300 focus:border-azul-500",
-              dados.dormitorios ? "text-tinta-900" : "text-tinta-500",
-            )}
-          >
-            <option value="">{formulario.campos.dormitorios.placeholder}</option>
-            {formulario.opcoesDormitorios.map((opcao) => (
-              <option key={opcao} value={opcao}>
-                {opcao}
-              </option>
-            ))}
-          </select>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label
+              htmlFor={`${idBase}-dormitorios`}
+              className="mb-1.5 block text-sm font-semibold text-tinta-700"
+            >
+              {formulario.campos.dormitorios.rotulo}{" "}
+              <span className="text-ouro-700">*</span>
+            </label>
+            <select
+              id={`${idBase}-dormitorios`}
+              name="dormitorios"
+              value={dados.dormitorios}
+              onChange={(evento) => alterar("dormitorios", evento.target.value)}
+              aria-invalid={Boolean(erros.dormitorios)}
+              aria-describedby={
+                erros.dormitorios ? `${idBase}-dormitorios-erro` : undefined
+              }
+              className={cn(
+                classeCampo,
+                "appearance-none",
+                classeBorda(Boolean(erros.dormitorios)),
+                dados.dormitorios ? "text-tinta-900" : "text-tinta-500",
+              )}
+            >
+              <option value="">{formulario.campos.dormitorios.placeholder}</option>
+              {formulario.opcoesDormitorios.map((opcao) => (
+                <option key={opcao} value={opcao}>
+                  {opcao}
+                </option>
+              ))}
+            </select>
+            <MensagemErro
+            id={`${idBase}-dormitorios-erro`}
+            mensagem={erros.dormitorios}
+          />
+          </div>
+
+          <div>
+            <label
+              htmlFor={`${idBase}-renda`}
+              className="mb-1.5 block text-sm font-semibold text-tinta-700"
+            >
+              {formulario.campos.renda.rotulo}{" "}
+              <span className="text-ouro-700">*</span>
+            </label>
+            <input
+              id={`${idBase}-renda`}
+              name="renda"
+              type="text"
+              inputMode="numeric"
+              enterKeyHint="next"
+              placeholder={formulario.campos.renda.placeholder}
+              value={dados.renda}
+              onChange={(evento) =>
+                alterar("renda", mascararMoeda(evento.target.value))
+              }
+              aria-invalid={Boolean(erros.renda)}
+              aria-describedby={erros.renda ? `${idBase}-renda-erro` : undefined}
+              className={cn(
+                "numerico",
+                classeCampo,
+                classeBorda(Boolean(erros.renda)),
+              )}
+            />
+            <MensagemErro
+            id={`${idBase}-renda-erro`}
+            mensagem={erros.renda}
+          />
+          </div>
         </div>
 
-        {/* Renda */}
-        <div>
-          <label
-            htmlFor={`${idBase}-renda`}
-            className="mb-1.5 block text-sm font-semibold text-tinta-700"
-          >
-            {formulario.campos.renda.rotulo}
-          </label>
-          <select
-            id={`${idBase}-renda`}
-            name="renda"
-            value={dados.renda}
-            onChange={(evento) => alterar("renda", evento.target.value)}
-            className={cn(
-              classeCampo,
-              "appearance-none border-tinta-300 focus:border-azul-500",
-              dados.renda ? "text-tinta-900" : "text-tinta-500",
-            )}
-          >
-            <option value="">{formulario.campos.renda.placeholder}</option>
-            {formulario.faixasRenda.map((faixa) => (
-              <option key={faixa} value={faixa}>
-                {faixa}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* FGTS */}
         <fieldset>
           <legend className="mb-1.5 block text-sm font-semibold text-tinta-700">
-            {formulario.campos.fgts.rotulo}
+            {formulario.campos.fgts.rotulo}{" "}
+            <span className="text-ouro-700">*</span>
           </legend>
           <div className="grid grid-cols-3 gap-2">
             {formulario.opcoesFgts.map((opcao) => {
@@ -317,13 +361,16 @@ export function FormularioLead() {
                 <button
                   key={opcao}
                   type="button"
+                  id={opcao === formulario.opcoesFgts[0] ? `${idBase}-fgts` : undefined}
                   aria-pressed={ativo}
                   onClick={() => alterar("fgts", ativo ? "" : opcao)}
                   className={cn(
                     "rounded-xl border px-3 py-3 text-[0.9375rem] font-semibold transition-colors",
                     ativo
                       ? "border-azul-500 bg-azul-50 text-azul-700"
-                      : "border-tinta-300 bg-superficie text-tinta-600 hover:border-azul-300",
+                      : erros.fgts
+                        ? "border-red-500 bg-superficie text-tinta-600"
+                        : "border-tinta-300 bg-superficie text-tinta-600 hover:border-azul-300",
                   )}
                 >
                   {opcao}
@@ -331,15 +378,19 @@ export function FormularioLead() {
               );
             })}
           </div>
+          <MensagemErro
+            id={`${idBase}-fgts-erro`}
+            mensagem={erros.fgts}
+          />
         </fieldset>
       </div>
 
       <button
         type="submit"
-        disabled={estado === "enviando"}
-        className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-azul-500 px-6 py-4 text-base font-semibold text-white shadow-[0_10px_24px_-10px_rgb(21_112_239_/_0.7)] transition-colors hover:bg-azul-600 active:bg-azul-700 disabled:cursor-not-allowed disabled:opacity-70 sm:text-[1.0625rem]"
+        className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-xl bg-azul-500 px-6 py-4 text-base font-semibold text-white shadow-[0_10px_24px_-10px_rgb(21_112_239_/_0.7)] transition-colors hover:bg-azul-600 active:bg-azul-700 sm:text-[1.0625rem]"
       >
-        {estado === "enviando" ? formulario.botaoEnviando : formulario.botao}
+        <IconeWhatsApp className="h-5 w-5 shrink-0" />
+        {formulario.botao}
       </button>
 
       <p className="mt-4 text-center text-xs leading-relaxed text-tinta-600">
@@ -368,7 +419,7 @@ export function SecaoFormulario({
   const itens = compacto
     ? formulario.antecipado.itens
     : [
-        "Resposta pelo WhatsApp, direto comigo",
+        "Resposta pelo WhatsApp, direto com o time",
         "Simulação gratuita e sem compromisso",
         "Seus dados não vão para terceiros",
       ];

@@ -65,7 +65,8 @@ export async function POST(requisicao: Request) {
     whatsapp,
     whatsappDigitos: digitos,
     dormitorios: texto(corpo.dormitorios, 60),
-    renda: texto(corpo.renda, 60),
+    // chega formatado em reais (ex.: "R$ 3.500,00")
+    renda: texto(corpo.renda, 40),
     fgts: texto(corpo.fgts, 20),
     origem: texto(corpo.origem, 60) || "formulario",
     pagina,
