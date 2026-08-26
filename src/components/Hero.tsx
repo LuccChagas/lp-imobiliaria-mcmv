@@ -2,7 +2,7 @@ import Image from "next/image";
 import { CtaPrincipal } from "./ui/CtaPrincipal";
 import { Reveal } from "./ui/Reveal";
 import { IconeCheck } from "./ui/Icones";
-import { hero, pessoa, sobre } from "@/lib/site";
+import { hero, pessoa, selos, sobre } from "@/lib/site";
 
 export function Hero() {
   return (
@@ -134,6 +134,25 @@ export function Hero() {
                 </span>
               </p>
             </div>
+          </Reveal>
+
+          {/* Selos institucionais entram na propria dobra: eram uma secao de
+              123px so para tres logos. */}
+          <Reveal atraso={360}>
+            <ul className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/15 pt-6">
+              {selos.itens.map((selo) => (
+                <li key={selo.src}>
+                  <Image
+                    src={selo.src}
+                    alt={selo.alt}
+                    width={selo.largura}
+                    height={selo.altura}
+                    sizes="130px"
+                    className="h-6 w-auto rounded bg-white/95 px-2 py-1 sm:h-7"
+                  />
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </div>

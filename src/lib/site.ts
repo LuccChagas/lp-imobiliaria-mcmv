@@ -80,10 +80,8 @@ export const pessoa = {
 
 export const navegacao = [
   { rotulo: "O empreendimento", ancora: "#empreendimento" },
-  { rotulo: "Lazer", ancora: "#lazer" },
-  { rotulo: "A região", ancora: "#localizacao" },
   { rotulo: "Condições", ancora: "#condicoes" },
-  { rotulo: "Dúvidas", ancora: "#faq" },
+  { rotulo: "Quem já comprou", ancora: "#prova" },
 ] as const;
 
 /* -------------------------------------------------------------------------- */
@@ -154,9 +152,9 @@ export const empreendimento = {
     { rotulo: "Total de unidades", valor: "1.632 unidades" },
   ],
   /**
-   * Diferente do lancamento anterior, este JA TEM incorporacao registrada em
-   * cartorio. E seguranca juridica real para quem compra na planta — por isso
-   * aparece na pagina, e nao so na letra miuda do rodape.
+   * Este empreendimento JA TEM incorporacao registrada em cartorio. E
+   * seguranca juridica real para quem compra na planta — por isso aparece na
+   * pagina, e nao so na letra miuda do rodape.
    */
   registro: {
     rotulo: "Incorporação já registrada em cartório",
@@ -171,6 +169,38 @@ export const empreendimento = {
     { src: "/empreendimento/portaria.jpg", alt: "Perspectiva ilustrativa da portaria e do acesso ao condomínio", largura: 1200, altura: 750 },
     { src: "/empreendimento/piscina-lazer.jpg", alt: "Perspectiva ilustrativa da área de lazer com piscina", largura: 565, altura: 475 },
   ],
+  /** Lista oficial da Cury para o Condominio Atlantica. */
+  lazer: {
+    titulo: "Lazer completo, dentro do condomínio",
+    itens: [
+      "Piscinas",
+      "Beach Tennis",
+      "Churrasqueira",
+      "Espaço Beleza",
+      "Brinquedoteca",
+      "Fitness",
+      "Sport Bar",
+      "Coworking",
+    ],
+  },
+  /** A secao "A regiao" saiu; o essencial dela vive aqui, em tres linhas. */
+  proximidades: [
+    "Ao lado do Parque da Represa de Guarapiranga",
+    "Estações Socorro e Jurubatuba, da Linha 9-Esmeralda",
+    "Shopping SP Market e Largo Treze na região",
+  ],
+  enderecos: {
+    empreendimento: {
+      rotulo: "Empreendimento",
+      linha1: "Rua Olívia Guedes Penteado, s/n",
+      linha2: "Socorro · São Paulo — SP",
+    },
+    stand: {
+      rotulo: "Stand de vendas",
+      linha1: "Av. Rio Bonito, 41",
+      linha2: "Socorro · São Paulo — SP",
+    },
+  },
   avisoIlustrativa:
     "Imagens meramente ilustrativas. Móveis, equipamentos e paisagismo não fazem parte do contrato.",
 } as const;
@@ -178,98 +208,7 @@ export const empreendimento = {
 /* -------------------------------------------------------------------------- */
 /* 4. Lazer                                                                    */
 /* -------------------------------------------------------------------------- */
-
-export const lazer = {
-  sobretitulo: "Lazer completo",
-  titulo: "Oito espaços para usar sem sair de casa",
-  descricao:
-    "Da piscina ao coworking. Tudo dentro do condomínio, incluso no seu apartamento.",
-  /**
-   * A Cury publicou poucos renders deste empreendimento e nenhum das areas
-   * internas. Entao aqui entram so as fotos que existem de verdade, e a lista
-   * oficial completa aparece como etiqueta. Usar render de outro condominio
-   * para preencher seria propaganda enganosa.
-   */
-  comFoto: [
-    { nome: "Piscinas", src: "/empreendimento/piscina-solarium.jpg", largura: 565, altura: 475 },
-    { nome: "Deck e paisagismo", src: "/empreendimento/piscina-deck.jpg", largura: 1400, altura: 486 },
-    { nome: "Área de lazer", src: "/empreendimento/piscina-lazer.jpg", largura: 565, altura: 475 },
-  ],
-  /** Lista oficial da Cury para o Condominio Atlantica. */
-  listaCompleta: [
-    "Piscinas",
-    "Beach Tennis",
-    "Churrasqueira",
-    "Espaço Beleza",
-    "Brinquedoteca",
-    "Fitness",
-    "Sport Bar",
-    "Coworking",
-  ],
-} as const;
-
-/* -------------------------------------------------------------------------- */
 /* 6. Localizacao                                                              */
-/* -------------------------------------------------------------------------- */
-
-export const localizacao = {
-  sobretitulo: "A região",
-  titulo: "Zona Sul, do lado da represa",
-  descricao:
-    "Socorro fica entre a Represa de Guarapiranga e o eixo de Santo Amaro: comércio, trem e parque, tudo na mesma região.",
-  enderecoEmpreendimento: {
-    rotulo: "Empreendimento",
-    linha1: "Rua Olívia Guedes Penteado, s/n",
-    linha2: "Socorro · São Paulo — SP",
-  },
-  enderecoStand: {
-    rotulo: "Stand de vendas",
-    linha1: "Av. Rio Bonito, 41",
-    linha2: "Socorro · São Paulo — SP",
-  },
-  /**
-   * Pontos de interesse da regiao. Todos verificados: os tres primeiros
-   * constam da propria pagina do empreendimento na Cury; os demais foram
-   * conferidos como existentes na regiao.
-   *
-   * NAO ha distancia nem tempo aqui de proposito — nenhum numero desses foi
-   * medido. Se o cliente medir e quiser publicar, e so preencher `detalhe`.
-   */
-  pontosDeInteresse: [
-    {
-      grupo: "Parques e lazer",
-      itens: [
-        { nome: "Parque da Barragem da Represa de Guarapiranga", detalhe: "Orla, ciclovia e área de lazer" },
-        { nome: "Represa de Guarapiranga", detalhe: "Um dos maiores espelhos d'água da cidade" },
-      ],
-    },
-    {
-      grupo: "Trem e mobilidade",
-      itens: [
-        { nome: "Estação Socorro", detalhe: "CPTM Linha 9-Esmeralda" },
-        { nome: "Estação Jurubatuba", detalhe: "CPTM Linha 9-Esmeralda" },
-        { nome: "Av. Atlântica e Av. Rio Bonito", detalhe: "Acesso direto pelo bairro" },
-      ],
-    },
-    {
-      grupo: "Compras e serviços",
-      itens: [
-        { nome: "Shopping SP Market", detalhe: "Na região" },
-        { nome: "Largo Treze · Santo Amaro", detalhe: "Polo de comércio da Zona Sul" },
-        { nome: "Tenda Atacadista", detalhe: "Nas proximidades" },
-      ],
-    },
-    {
-      grupo: "Aeroporto",
-      itens: [
-        { nome: "Aeroporto de Congonhas", detalhe: "O mais próximo, na própria Zona Sul" },
-      ],
-    },
-  ],
-  avisoPontos:
-    "Pontos de referência da região, informados sem distância ou tempo de deslocamento.",
-} as const;
-
 /* -------------------------------------------------------------------------- */
 /* 7. Condicoes de pagamento                                                   */
 /* -------------------------------------------------------------------------- */
@@ -278,42 +217,34 @@ export const condicoes = {
   sobretitulo: "A pergunta que trava todo mundo",
   titulo: "“Será que eu consigo?”",
   descricao:
-    "Essa é a dúvida que mais chega aqui. Quem aprova é a Caixa — mas dá para adiantar o que costuma pesar a favor de quem me procura.",
+    "Quem aprova é a Caixa — mas dá para adiantar o que costuma pesar a favor de quem nos procura.",
+  /** Quatro cards. Sao as objecoes que mais aparecem; com a saida do FAQ,
+   *  sao estas respostas que carregam o trabalho dele. */
   itens: [
     {
       titulo: "Entrada a partir de R$ 800",
       texto:
-        "Você não precisa ter o valor da entrada guardado. Ela pode começar em R$ 800 ou ser parcelada no boleto até a entrega.",
+        "Você não precisa ter o valor guardado. A entrada pode começar em R$ 800 ou ser parcelada no boleto até a entrega.",
     },
     {
-      titulo: "Seu FGTS pode entrar",
+      titulo: "FGTS e subsídio do programa",
       texto:
-        "Se você já trabalhou de carteira assinada, o saldo pode virar entrada ou abater o valor financiado.",
-    },
-    {
-      titulo: "Subsídio do Minha Casa Minha Vida",
-      texto:
-        "Dependendo da sua faixa de renda, parte do valor pode ser coberta por subsídio do programa. O quanto, só a análise da Caixa diz.",
+        "Seu saldo de FGTS pode virar entrada ou abater o valor financiado. Dependendo da faixa de renda, parte ainda pode ser coberta por subsídio do Minha Casa Minha Vida.",
     },
     {
       titulo: "Autônomo e MEI conseguem",
       texto:
-        "Sem carteira assinada também dá. A renda é comprovada de outro jeito e eu monto a documentação com você.",
+        "Sem carteira assinada também dá. A renda é comprovada de outro jeito e a gente monta a documentação com você.",
     },
     {
       titulo: "Nome com restrição? Vale tentar",
       texto:
-        "Restrição não é uma porta fechada automática. Depende do tipo e do valor — a consulta te dá a resposta na hora.",
-    },
-    {
-      titulo: "É o seu primeiro imóvel",
-      texto:
-        "É exatamente o perfil do programa. Quem nunca teve imóvel próprio costuma entrar nas melhores condições.",
+        "Restrição não é uma porta fechada automática. Depende do tipo e do valor — a consulta é gratuita e dá a resposta na hora.",
     },
   ],
   faixasTitulo: "Como as 1.632 unidades se dividem",
   faixasDescricao:
-    "A distribuição por faixa de renda consta do registro de incorporação do empreendimento:",
+    "A distribuição por faixa de renda consta do registro de incorporação:",
   faixas: [
     { unidades: "1.336", tipo: "unidades HIS-2", renda: "famílias de 3 a 6 salários mínimos" },
     { unidades: "296", tipo: "unidades R2V", renda: "sem limite de renda" },
@@ -326,57 +257,19 @@ export const condicoes = {
 /* -------------------------------------------------------------------------- */
 /* 8. Como funciona                                                            */
 /* -------------------------------------------------------------------------- */
-
-export const passos = {
-  sobretitulo: "Do primeiro contato à chave",
-  titulo: "Como funciona, em 4 passos",
-  itens: [
-    {
-      numero: "01",
-      titulo: "Você me chama no WhatsApp",
-      texto: "Me diz quantos dormitórios você quer e mais ou menos quanto a família ganha. Só isso.",
-    },
-    {
-      numero: "02",
-      titulo: "Eu faço a simulação",
-      texto:
-        "Levanto quanto você consegue financiar, quanto de FGTS dá para usar e como fica a parcela. Sem custo e sem compromisso.",
-    },
-    {
-      numero: "03",
-      titulo: "A gente visita o stand",
-      texto:
-        "Você conhece o decorado, vê a planta ao vivo e escolhe a unidade. Fica na Av. Rio Bonito, 41, no Socorro.",
-    },
-    {
-      numero: "04",
-      titulo: "Assinatura e acompanhamento",
-      texto:
-        "Organizo a documentação, acompanho a análise na Caixa e sigo com você até a entrega das chaves.",
-    },
-  ],
-} as const;
-
-/* -------------------------------------------------------------------------- */
 /* 9. Tayna                                                                    */
 /* -------------------------------------------------------------------------- */
 
 export const sobre = {
   sobretitulo: "Quem vai te atender",
   titulo: "Olá, eu sou a gerente Tayná",
-  paragrafos: [
-    "Sou especialista em imóveis financiados pela Caixa Econômica Federal, principalmente pelo Minha Casa Minha Vida. Meu foco é oferecer a condição mais facilitada possível para você conquistar o seu apartamento.",
-    "Como sou gerente, consigo olhar a sua simulação junto com a equipe e buscar a condição que realmente funciona para o seu caso — em vez de te empurrar a unidade da vez.",
-  ],
+  /** Um paragrafo so: a secao virou faixa dentro da prova social. */
+  texto:
+    "Sou especialista em imóveis financiados pela Caixa, principalmente pelo Minha Casa Minha Vida. Meu time e eu buscamos a condição que realmente funciona para o seu caso.",
   metricas: [
     { valor: "+500", rotulo: "apartamentos vendidos" },
-    { valor: "17 mil", rotulo: "seguidores acompanham o trabalho" },
-    { valor: "Toda SP", rotulo: "atendimento na capital e Grande SP" },
-  ],
-  itensCredencial: [
-    "Gerente de Vendas · Cury Construtora",
-    "Especialista em financiamento Caixa e MCMV",
-    "Atendimento em toda a Grande São Paulo",
+    { valor: "17 mil", rotulo: "seguidores acompanham" },
+    { valor: "Toda SP", rotulo: "capital e Grande SP" },
   ],
   cta: "Falar com especialista agora",
   fotoCaminhando: {
@@ -472,57 +365,6 @@ export const depoimentos = {
 
 /* -------------------------------------------------------------------------- */
 /* 11. FAQ                                                                     */
-/* -------------------------------------------------------------------------- */
-
-export const faq = {
-  sobretitulo: "Dúvidas frequentes",
-  titulo: "O que todo mundo me pergunta antes de começar",
-  chamadaFinal: "Ficou com outra dúvida?",
-  cta: "Perguntar ao nosso time",
-  itens: [
-    {
-      pergunta: "A entrada é mesmo a partir de R$ 800?",
-      resposta:
-        "Sim. Neste empreendimento a entrada pode começar em R$ 800, e o restante ser parcelado no boleto até a entrega. O valor exato da sua entrada depende da unidade escolhida e do resultado da sua análise de crédito.",
-    },
-    {
-      pergunta: "Meu nome está negativado. Consigo comprar?",
-      resposta:
-        "Vale tentar. Restrição no nome não é uma recusa automática: depende do tipo de pendência, do valor e de quem registrou. A consulta é rápida e te dá a resposta real. Eu não prometo aprovação — quem aprova é a Caixa.",
-    },
-    {
-      pergunta: "Sou autônomo e não tenho carteira assinada. Dá certo?",
-      resposta:
-        "Dá. Autônomo, MEI e trabalhador informal conseguem financiar. A comprovação de renda é feita de outro jeito e eu te oriento sobre quais documentos juntar.",
-    },
-    {
-      pergunta: "Como funciona o uso do FGTS?",
-      resposta:
-        "Se você tem saldo e cumpre os requisitos da Caixa, ele pode ser usado como entrada ou para abater o valor financiado. Na simulação eu já verifico quanto do seu saldo dá para usar.",
-    },
-    {
-      pergunta: "Qual renda eu preciso ter?",
-      resposta:
-        "Este empreendimento tem 1.336 unidades para famílias de 3 a 6 salários mínimos e 296 unidades sem limite de renda. Se a sua renda estiver abaixo disso, me chama mesmo assim: eu vejo o que temos em outros empreendimentos que se encaixem no seu caso.",
-    },
-    {
-      pergunta: "O apartamento já está pronto?",
-      resposta:
-        "Não. É lançamento, ou seja, compra na planta. É justamente por isso que a condição de entrada é tão facilitada. O cronograma de obra vai por escrito antes de você assinar qualquer coisa.",
-    },
-    {
-      pergunta: "A simulação tem algum custo?",
-      resposta:
-        "Nenhum. A simulação é gratuita e não te compromete com nada. Você só segue em frente se as condições fizerem sentido para você.",
-    },
-    {
-      pergunta: "Quais documentos eu preciso separar?",
-      resposta:
-        "Para a simulação inicial, nenhum — só os dados que você me passa na conversa. Se você decidir seguir, o básico costuma ser RG, CPF, comprovante de renda, comprovante de residência e certidão de estado civil. Eu te mando a lista completa na hora certa.",
-    },
-  ],
-} as const;
-
 /* -------------------------------------------------------------------------- */
 /* 12. Formulario                                                              */
 /* -------------------------------------------------------------------------- */
@@ -633,25 +475,11 @@ export function linkWhatsApp(mensagem: string) {
   return `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
-const NOME_CURTO = "Cidade Parque Guarapiranga — Atlântica";
-
-/** Mensagem pre-preenchida por origem — reduz o atrito de ter que pensar. */
-export const mensagens = {
-  cabecalho: `Oi Tayná! Vim pelo site e quero saber mais sobre o ${NOME_CURTO}.`,
-  hero: `Oi Tayná! Quero simular meu apartamento no ${NOME_CURTO}. Pode me ajudar?`,
-  empreendimento: `Oi Tayná! Vi as fotos do ${NOME_CURTO} e queria saber mais sobre as unidades.`,
-  lazer: `Oi Tayná! Vi a área de lazer do ${NOME_CURTO} e queria mais informações.`,
-  localizacao: `Oi Tayná! Queria visitar o stand do ${NOME_CURTO}. Como funciona?`,
-  condicoes: `Oi Tayná! Queria fazer a simulação para saber se eu consigo ser aprovado.`,
-  sobre: `Oi Tayná! Vim pelo site e gostaria de falar com você sobre o ${NOME_CURTO}.`,
-  provas: `Oi Tayná! Vi os depoimentos no seu site e quero fazer minha simulação também.`,
-  depoimentos: `Oi Tayná! Li os depoimentos dos seus clientes e quero fazer minha simulação.`,
-  faq: "Oi Tayná! Fiquei com uma dúvida depois de ler seu site. Pode me ajudar?",
-  rodape: `Oi Tayná! Vim pelo site e quero mais informações sobre o ${NOME_CURTO}.`,
-  "botao-flutuante": `Oi Tayná! Quero falar sobre o ${NOME_CURTO}.`,
-} as const;
-
-export type Origem = keyof typeof mensagens;
+/**
+ * O unico WhatsApp que sobrou e o do envio do formulario, montado em
+ * FormularioLead com os dados preenchidos. Nao ha mais mensagem por secao
+ * porque nenhum botao abre conversa direto.
+ */
 
 /* -------------------------------------------------------------------------- */
 /* PENDENCIAS                                                                  */

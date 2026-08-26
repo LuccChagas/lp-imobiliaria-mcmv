@@ -7,14 +7,14 @@ import { condicoes } from "@/lib/site";
 export function Condicoes() {
   return (
     <section id="condicoes" className="bg-fundo">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
         <SecaoTitulo
           sobretitulo={condicoes.sobretitulo}
           titulo={condicoes.titulo}
           descricao={condicoes.descricao}
         />
 
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+        <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {condicoes.itens.map((item, indice) => (
             <Reveal key={item.titulo} como="li" atraso={indice * 60}>
               <div className="h-full rounded-2xl border border-tinta-200 bg-superficie p-4 transition-colors hover:border-ouro-500/50 sm:p-5">
@@ -38,7 +38,7 @@ export function Condicoes() {
         </ul>
 
         {/* Faixas reais do registro do empreendimento */}
-        <Reveal atraso={120} className="mt-12">
+        <Reveal atraso={120} className="mt-8">
           <div className="rounded-2xl border border-ouro-500/35 bg-ouro-50 p-6 sm:p-8">
             <h3 className="font-titulo text-xl font-extrabold text-azul-900">
               {condicoes.faixasTitulo}
@@ -67,7 +67,7 @@ export function Condicoes() {
           </div>
         </Reveal>
 
-        <Reveal atraso={160} className="mt-8">
+        <Reveal atraso={160} className="mt-5">
           <div className="mx-auto max-w-3xl rounded-2xl border border-tinta-200 bg-tinta-100 px-5 py-4">
             <p className="text-[0.8125rem] leading-relaxed text-tinta-600">
               <span className="font-semibold text-tinta-700">Importante: </span>
@@ -78,7 +78,7 @@ export function Condicoes() {
 
         {/* A simulacao pede renda, FGTS e dormitorios — que sao exatamente os
             campos do formulario. Por isso aqui ele vem antes do WhatsApp. */}
-        <Reveal atraso={200} className="mt-8">
+        <Reveal atraso={200} className="mt-6">
           <div className="text-center">
             <CtaPrincipal origem="condicoes">{condicoes.cta}</CtaPrincipal>
           </div>

@@ -4,7 +4,6 @@ import { CtaPrincipal } from "./ui/CtaPrincipal";
 import {
   contato,
   empreendimento,
-  navegacao,
   pessoa,
   rodape,
   selos,
@@ -15,8 +14,8 @@ export function Rodape() {
 
   return (
     <footer className="bg-azul-950 text-azul-100">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr_1fr]">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr]">
           <div>
             <p className="font-titulo text-lg font-extrabold tracking-[0.08em] text-white uppercase">
               {pessoa.nome}
@@ -40,31 +39,7 @@ export function Rodape() {
             </div>
           </div>
 
-          <nav aria-label="Rodapé">
-            <p className="text-[0.8125rem] font-semibold tracking-[0.12em] text-ouro-300 uppercase">
-              Nesta página
-            </p>
-            <ul className="mt-4 grid gap-2.5">
-              {navegacao.map((item) => (
-                <li key={item.ancora}>
-                  <a
-                    href={item.ancora}
-                    className="text-[0.9375rem] text-azul-200 transition-colors hover:text-white"
-                  >
-                    {item.rotulo}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a
-                  href="#formulario"
-                  className="text-[0.9375rem] text-azul-200 transition-colors hover:text-white"
-                >
-                  Fazer minha simulação
-                </a>
-              </li>
-            </ul>
-          </nav>
+
 
           <div>
             <p className="text-[0.8125rem] font-semibold tracking-[0.12em] text-ouro-300 uppercase">
@@ -84,7 +59,7 @@ export function Rodape() {
         </div>
 
         {/* Selos institucionais em versao clara sobre o fundo escuro */}
-        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-8">
+        <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-6">
           {selos.itens.map((selo) => (
             <Image
               key={selo.src}
@@ -99,7 +74,7 @@ export function Rodape() {
         </div>
 
         {/* Avisos legais. O primeiro e exigido pela Lei 4.591/64 — nao remova. */}
-        <div className="mt-8 grid gap-4 border-t border-white/10 pt-8">
+        <div className="mt-6 grid gap-3 border-t border-white/10 pt-6">
           <p className="text-[0.6875rem] leading-relaxed text-azul-300">
             {rodape.avisoLegal}
           </p>

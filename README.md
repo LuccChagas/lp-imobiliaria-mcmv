@@ -197,20 +197,40 @@ Copie `.env.example` para `.env.local`. Todas opcionais — a página funciona c
 
 ## Estrutura da página
 
-1. **Hero** — render das torres em tela cheia, nome do empreendimento, **R$ 800** em destaque, e a Tayná já presente com foto e "+500 vendidos"
-2. **Selos** — Caixa, Minha Casa Minha Vida e FGTS
-3. **Formulário antecipado** — para quem chega de anúncio já decidido (ver abaixo)
-4. **O empreendimento** — ficha técnica, selo de incorporação registrada e galeria
-5. **Lazer** — as 3 fotos que existem + os 8 diferenciais oficiais
-6. **A região** — endereços com link para o Maps e os pontos de interesse agrupados
-7. **Condições** — entrada, FGTS, subsídio, autônomo, restrição no nome, e as duas faixas reais
-8. **Como funciona** — 4 passos
-9. **Sobre a Tayná** — a foto dela com o contrato da Caixa em destaque (prova mais forte que retrato posado), com a foto dela a caminho de um atendimento encaixada, métricas e credenciais
-10. **Depoimentos** — os prints de conversa que ela publica no Instagram, em seção própria e fundo escuro. É a prova mais forte da página: cliente falando com as próprias palavras
-11. **Prova social** — 3 vídeos com play sob demanda e um carrossel contínuo com 12 fotos de clientes reais
-12. **FAQ** — 8 objeções
-13. **Formulário** — nome, WhatsApp, dormitórios, renda, FGTS
-14. **Rodapé** — CRECI, selos e os avisos legais
+Seis seções. A versão anterior tinha treze e o cliente devolveu com "muito mais curto e
+direto, menos poluído" — a página caiu de **19,6 para 11,9 telas de celular (−40%)** sem
+perder nenhum argumento de venda.
+
+1. **Hero** — render das torres, nome, **R$ 800**, a Tayná com foto e "+500 vendidos", e os selos Caixa/MCMV/FGTS na própria dobra
+2. **Formulário antecipado** (`#simulacao`) — para quem chega de anúncio já decidido
+3. **O empreendimento** — ficha, selo de incorporação registrada, galeria, lazer em etiquetas, proximidades e os dois endereços
+4. **Condições** — 4 cards de objeção + as duas faixas de renda reais
+5. **Prova social** — prints de conversa, vídeos, fotos de clientes e a faixa de credencial da Tayná
+6. **Formulário final** (`#formulario`)
+
+Rodapé com o obrigatório: CRECI, selos e os avisos legais.
+
+### O que foi fundido, e por quê
+
+| Saiu | Para onde foi |
+| --- | --- |
+| Seção "Selos" (123px só para 3 logos) | Dentro da dobra |
+| Seção "Lazer" | Etiquetas dentro do empreendimento |
+| Seção "A região" | Três linhas de proximidade + os endereços, no empreendimento |
+| Seção "Como funciona" | Cortada — condições e formulário já respondem |
+| Seção "Sobre a Tayná" | Faixa de credencial dentro da prova social |
+| Seções "Depoimentos" e "Prova social" | Fundidas em uma |
+| FAQ (8 perguntas) | Cortado — as 4 objeções que carregavam o peso viraram os cards de "Condições" |
+| Navegação do rodapé | Cortada |
+
+O FAQ era o corte mais arriscado, porque respondia as objeções reais (nome sujo, autônomo,
+FGTS, entrada). Elas não se perderam: já existiam em formato de card na seção "Condições",
+que era redundante com o FAQ. O que sobrou de fato lá — documentos, prazo de obra, custo da
+simulação — passa a ser conversa no WhatsApp, que é onde essas perguntas realmente se
+resolvem.
+
+**Consequência técnica:** o `FAQPage` saiu do JSON-LD junto. Manter esse schema sem o
+conteúdo visível na página é motivo de penalização pelo Google.
 
 ### `src/lib/site.ts` é a única coisa que você precisa editar
 
@@ -312,6 +332,53 @@ compacta (`<SecaoFormulario id="simulacao" compacto />`).
 Ele não vem **antes** do produto de propósito: diferente de uma página de oferta genérica,
 aqui o visitante chega sem saber o que é o Atlântica. A dobra apresenta o empreendimento, o
 preço e a região; só então a página pede os dados.
+
+---
+
+## Como medir o desempenho desta página
+
+Três camadas, cada uma com ferramenta padrão. Serve tanto para acompanhar quanto para
+defender decisões diante do cliente sem discutir por gosto.
+
+### 1. Técnico — Lighthouse
+
+Rodar contra o build de produção (`npm run build && npx next start`), não contra o `dev`:
+
+```bash
+npx lighthouse http://127.0.0.1:3000/ --view              # mobile
+npx lighthouse http://127.0.0.1:3000/ --preset=desktop --view
+```
+
+Medido depois do enxugamento:
+
+| | Mobile | Desktop |
+| --- | --- | --- |
+| Performance | **91** | **100** |
+| Acessibilidade | **100** | **100** |
+| Boas práticas | **100** | **100** |
+| SEO | **100** | **100** |
+| LCP | 3,4 s | 0,7 s |
+| CLS | **0** | **0** |
+| Peso | 466 KB | 724 KB |
+
+CLS zero quer dizer que nada pula na tela durante o carregamento. O LCP mobile de 3,4s
+(era 4,1s) é o ponto que ainda dá para melhorar: é a imagem da dobra, que no celular fica
+sob um degradê de 92% de opacidade — paga-se o peso inteiro de algo que quase não se vê.
+
+Para dados de campo, com usuários reais, use o **PageSpeed Insights** na URL de produção ou
+ative o **Vercel Speed Insights**.
+
+### 2. Conteúdo — profundidade de rolagem
+
+`RastreioRolagem` dispara um evento `Rolagem` em **25, 50, 75 e 100%**, uma vez por sessão,
+para GA4, Meta e `dataLayer`. É o dado que responde "a página está longa demais?" sem
+depender de opinião: se a maioria para nos 50%, tudo abaixo disso é peso morto.
+
+### 3. Conversão — por seção
+
+Cada CTA carrega uma `origem` distinta e dispara `IntencaoFormulario`; o envio dispara
+`Lead`. Depois do tráfego, monta-se a tabela seção → cliques → leads, e corta-se o que não
+paga o próprio espaço.
 
 ---
 

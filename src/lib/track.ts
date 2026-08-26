@@ -57,6 +57,15 @@ export function rastrearIntencaoFormulario(origem: string) {
   disparar("IntencaoFormulario", { origem, canal: "formulario" });
 }
 
+/**
+ * Marco de profundidade de rolagem (25, 50, 75 e 100%).
+ * E o dado que responde "a pagina esta longa demais?" sem depender de
+ * opiniao: se a maioria para nos 50%, tudo abaixo disso e peso morto.
+ */
+export function rastrearRolagem(percentual: number) {
+  disparar("Rolagem", { percentual, marco: `${percentual}%` });
+}
+
 /** Envio do formulario de simulacao. */
 export function rastrearLead(origem: string, extras: Parametros = {}) {
   disparar("Lead", { origem, ...extras });
