@@ -55,8 +55,8 @@ export const contato = {
    * todos os CTAs e a mensagem pre-preenchida saem daqui.
    */
   whatsapp: "5511991969596",
-  /** TODO: CRECI da Tayna. Obrigatorio por lei (6.530/78) e ainda nao temos. */
-  creci: "CRECI-SP 000.000-F",
+  /** CRECI da Tayna. Obrigatorio em publicidade imobiliaria (Lei 6.530/78). */
+  creci: "CRECI-SP 254570-F",
   /** CRECI da Central de Vendas da Cury, publicado na pagina do empreendimento. */
   creciCentralCury: "CRECI 23.670-J",
   /** Usados so no JSON-LD (sameAs), para o Google ligar as entidades.
@@ -498,7 +498,6 @@ export function linkWhatsApp(mensagem: string) {
 /* -------------------------------------------------------------------------- */
 
 export const PENDENCIAS = [
-  "contato.creci — CRECI da Tayna. UNICO bloqueio que sobrou. Obrigatorio por lei (6.530/78).",
   "contato.whatsapp — trocar pelo numero definitivo quando o cliente passar.",
   "hero.destaqueValor — 'entrada a partir de R$ 800' veio do site dela como condicao geral. CONFIRMAR se vale para o Condominio Atlantica antes de rodar trafego.",
   "A Cury nao publicou plantas deste empreendimento. Se ela conseguir o material, da para reativar a secao.",

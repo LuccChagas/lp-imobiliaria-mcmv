@@ -71,20 +71,15 @@ Um lugar só: `contato.whatsapp` em [`src/lib/site.ts`](./src/lib/site.ts). Só 
 
 ---
 
-## ⚠️ Falta uma coisa para poder subir
+## Compliance legal: resolvido
 
-**O CRECI da Tayná.** É o único bloqueio que restou.
+O **CRECI da Tayná é o CRECI-SP 254570-F**, e aparece em dois lugares da página: no rodapé,
+ao lado do CRECI da Central de Vendas da Cury (23.670-J), e na faixa de credencial dentro da
+prova social. Era o item que impedia a publicação — publicidade imobiliária sem o número
+visível infringe a Lei 6.530/78.
 
-Publicidade imobiliária sem o número do CRECI visível infringe a Lei 6.530/78, e a multa
-recai sobre ela. Hoje o rodapé e a seção "Sobre" mostram `CRECI-SP 000.000-F`, que é
-placeholder. Troque em `contato.creci` no [`src/lib/site.ts`](./src/lib/site.ts).
-
-> O site atual dela (apartamentofacilitado.net) também não exibe CRECI nenhum — vale
+> O site antigo dela, o apartamentofacilitado.net, continua sem exibir CRECI nenhum. Vale
 > corrigir lá também.
-
-O CRECI da Central de Vendas da Cury (**23.670-J**) já está na página, extraído do material
-oficial do empreendimento, mas ele identifica a imobiliária, não a corretora. Os dois
-precisam aparecer.
 
 ### Duas autorizações que valem confirmar
 
